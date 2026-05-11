@@ -1,0 +1,70 @@
+baseURL = 'https://digest.rheumatology.center/'
+languageCode = 'en-us'
+title = 'Rheumatology Digest'
+theme = 'PaperMod'
+
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+[pagination]
+  pagerSize = 10
+
+[permalinks]
+  posts = '/posts/:slug/'
+
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[menu]
+  [[menu.main]]
+    identifier = 'posts'
+    name = 'Posts'
+    url = '/posts/'
+    weight = 10
+  [[menu.main]]
+    identifier = 'tags'
+    name = 'Tags'
+    url = '/tags/'
+    weight = 20
+  [[menu.main]]
+    identifier = 'archives'
+    name = 'Archives'
+    url = '/archives/'
+    weight = 30
+  [[menu.main]]
+    identifier = 'search'
+    name = 'Search'
+    url = '/search/'
+    weight = 40
+
+[params]
+  env = 'production'
+  author = 'Dr. Sree Hari Reddy MD'
+  description = 'Educational rheumatology content for clinicians by Dr. Sree Hari Reddy MD.'
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+
+  [params.homeInfoParams]
+    Title = 'Rheumatology Digest'
+    Content = 'Educational rheumatology content for clinicians — daily digest entries, cases, and learning modules by Dr. Sree Hari Reddy MD.'
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ['title', 'permalink', 'summary', 'content']
