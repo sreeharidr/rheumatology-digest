@@ -1,0 +1,20 @@
+{{- $src := .Page.Params.source -}}
+{{- if $src -}}
+<aside class="source-citation" style="margin: 2.5rem 0 1rem; padding: 1rem 1.25rem; border-left: 4px solid var(--primary); background: var(--code-bg); border-radius: 4px;">
+  <div style="font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--secondary); margin-bottom: 0.5rem;">Original article</div>
+  <div style="font-size: 0.95rem; line-height: 1.55;">
+    {{- with $src.authors }}{{ . }}. {{ end -}}
+    {{- with $src.title }}<em>{{ . }}.</em> {{ end -}}
+    {{- with $src.journal }}{{ . }}{{ end -}}
+    {{- with $src.year }} ({{ . }}){{ end -}}
+    {{- if or $src.doi $src.url }}.{{ end -}}
+    {{- with $src.url -}}
+      <br><a href="{{ . }}" target="_blank" rel="noopener noreferrer">Read the full article →</a>
+    {{- else -}}
+      {{- with $src.doi -}}
+        <br><a href="https://doi.org/{{ . }}" target="_blank" rel="noopener noreferrer">doi:{{ . }}</a>
+      {{- end -}}
+    {{- end -}}
+  </div>
+</aside>
+{{- end -}}
