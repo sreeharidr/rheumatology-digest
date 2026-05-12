@@ -1,7 +1,8 @@
 ---
-title: "{{ replace .Name `-` ` ` | title }}"
+title: "{{ .File.ContentBaseName | replaceRE `^[0-9]{4}-[0-9]{2}-[0-9]{2}-` `` | replace `-` ` ` | title }}"
 date: {{ .Date }}
 draft: true
+slug: "{{ .File.ContentBaseName | replaceRE `^[0-9]{4}-[0-9]{2}-[0-9]{2}-` `` }}"
 author: "Dr. Sree Hari Reddy MD"
 tags: []
 categories: []

@@ -56,6 +56,10 @@ buildExpired = false
   ShowToc = true
   TocOpen = false
 
+  [params.cover]
+    hiddenInList = true
+    hiddenInSingle = false
+
   [params.homeInfoParams]
     Title = 'Rheumatology Digest'
     Content = 'Educational rheumatology content for clinicians — daily digest entries, cases, and learning modules by Dr. Sree Hari Reddy MD.'
