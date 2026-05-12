@@ -1,0 +1,108 @@
+# Rheumatology Digest — Project Context
+
+A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologist, Kurnool). Educational rheumatology content — daily clinical write-ups built around an infographic + concise summary, expanded over years into a permanent searchable archive. Currently distributed via WhatsApp; this site is the canonical web home.
+
+## Stack
+
+- **Generator:** Hugo extended **v0.161.1** (pinned in `.github/workflows/hugo.yml` via `HUGO_VERSION`)
+- **Theme:** [PaperMod](https://github.com/adityatelange/hugo-PaperMod), installed as a **git submodule** at `themes/PaperMod`
+- **Source:** [`sreeharidr/rheumatology-digest`](https://github.com/sreeharidr/rheumatology-digest) (public)
+- **Build & host:** **GitHub Pages** via GitHub Actions workflow (`.github/workflows/hugo.yml`). Cloudflare Pages was tried first and abandoned due to build issues; migration back is trivial if needed.
+- **Live URL:** https://sreeharidr.github.io/rheumatology-digest/
+- **Eventual URL:** TBD — user may buy `rheumatologydigest.com` later. Free interim option: `digest.rheumatology.center` (parent domain already in Cloudflare; not yet wired up).
+
+## Repo layout
+
+```
+.
+├── .github/workflows/hugo.yml      # Build + deploy on push to main
+├── archetypes/
+│   ├── default.md                  # Default Hugo template
+│   └── posts.md                    # IMPORTANT — used by every `hugo new content posts/...`
+├── content/
+│   ├── archives.md                 # Stub for PaperMod's archives layout
+│   ├── search.md                   # Stub for PaperMod's search layout
+│   └── posts/                      # One folder per post (page bundles)
+│       ├── welcome.md              # Legacy single-file post
+│       └── YYYY-MM-DD-<slug>/      # Date-prefixed convention for new posts
+│           ├── index.md
+│           └── infographic.png
+├── layouts/
+│   └── shortcodes/
+│       └── source.html             # {{< source >}} — citation block from front matter
+├── themes/PaperMod/                # Git submodule — do not edit directly
+├── hugo.toml                       # Site config
+└── README.md
+```
+
+## Local development
+
+```sh
+hugo server -D                       # serve at http://localhost:1313 with drafts
+```
+
+The dev server hot-reloads on save (config + content + layouts). If `-D` is set, posts with `draft: true` are visible locally but excluded from the production build.
+
+## Per-post workflow
+
+User's existing offline workflow: select published paper → make a portrait HTML infographic → previously shared to WhatsApp. The site adds a permanent record; WhatsApp now shares the post URL (infographic appears as link preview).
+
+**Per post:**
+
+1. **Create the post folder + scaffold** (the archetype fills in slug + title from folder name):
+   ```sh
+   hugo new content posts/YYYY-MM-DD-<topic-slug>/index.md
+   ```
+   Use today's date and a URL-friendly slug. Example: `2026-05-13-jak-inhibitors-cv-risk`.
+
+2. **Edit front matter** — title (real clinical title), `summary`, `tags`, `source` block (authors / journal / year / DOI). Leave `slug` alone — auto-derived from folder name minus date prefix.
+
+3. **Drop the infographic** into the same folder as `infographic.png`. The archetype already references this filename in `cover.image`.
+
+4. **Write the body** — TL;DR blockquote at top, then the user's clinical summary (in their voice — do NOT pre-draft commentary unless the user explicitly asks). End with `{{< source >}}` which renders the styled citation box from front matter.
+
+5. **Preview locally** at http://localhost:1313/posts/<slug>/. When ready, set `draft: false`.
+
+6. **Commit + push:**
+   ```sh
+   git add content/posts/YYYY-MM-DD-<topic-slug>
+   git commit -m "Post: <topic title>"
+   git push
+   ```
+   GitHub Actions deploys in ~30 seconds.
+
+## Conventions
+
+- **Folder naming:** `YYYY-MM-DD-<slug>/` for posts. Date prefix is for chronological sorting in Finder; the archetype strips it from the URL slug automatically.
+- **Slug:** must be set via the `slug:` field for stability — never derived from title, since title changes would break URLs.
+- **Tags — two-axis system** (see `memory/project_post_workflow.md` for the full taxonomy):
+  - Disease: `sle`, `myositis`, `scleroderma`, `rheumatoid-arthritis`, `gout`, `axial-spondyloarthritis`, `vasculitis`, etc.
+  - Theme: `treatment`, `diagnosis`, `pathophysiology`, `safety`, `guidelines`, `imaging`
+  - Optional: evidence type (`rct`, `meta-analysis`, `review`), drug name
+- **Image filename:** always `infographic.png` (or `.jpg`) for the hero image. Avoids re-editing `cover.image` per post.
+- **Cover behavior:** hidden on list pages (`params.cover.hiddenInList = true`), shown at top of the post itself.
+- **Permalinks:** `/posts/:slug/` — `:slug` comes from the explicit `slug` field set in front matter.
+
+## Working with this user
+
+- **Code-aware but not a software engineer.** Comfortable with terminal, markdown, basic git. Treat unfamiliar tooling as new ground — explain what commands do, don't assume framework knowledge.
+- **One step at a time.** After each change: state a verification action (URL to open, command to run), wait for confirmation before proceeding. Flag destructive actions before running.
+- **Authentic voice is the point.** Clinical interpretation is the value of this site. Do NOT draft post commentary unless explicitly asked — the user writes their own summary, Claude provides scaffolding only (front matter, citation block, structural editing).
+- **External archive:** `~/Documents/Rheumatology Digest/` (separate from this repo, NOT in git). Each paper lives in a dated subfolder containing the source PDF (+ eventually the infographic). User reads PDF + writes summary → posts go in this repo.
+
+## Tooling notes
+
+- **`gh` CLI** is installed and authenticated as `sreeharidr` with a credential helper for git over HTTPS. Future `git push` operations don't prompt for credentials.
+- **`poppler`** is installed (for `pdftotext` / PDF reading via Read tool — needed when reading source PDFs from the archive folder).
+- **Hugo extended** is installed via Homebrew (matches the version pinned in CI).
+
+## Open follow-ups
+
+Things flagged but not yet done — pick these up when relevant:
+
+1. **Compress the 6 MB infographic** in `content/posts/2026-05-12-cellular-therapies-rheumatic-disease/` via TinyPNG. Hospital wifi load times + WhatsApp link previews.
+2. **Custom domain.** Either `digest.rheumatology.center` (free, parent already in Cloudflare) or eventual `rheumatologydigest.com`. Setting one up sooner = fewer github.io URLs in the wild that will 404 after the switch.
+3. **Tag-based vector icons** instead of cover images on list pages — visual differentiation, requires SVG design work.
+4. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
+5. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
+6. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
