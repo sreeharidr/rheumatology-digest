@@ -1,0 +1,11 @@
+{{- /*
+  Site-wide additions to <head>. PaperMod's theme/layouts/partials/head.html
+  includes this partial automatically if it exists.
+*/ -}}
+
+{{- /* Analytics — GoatCounter. Production only, so local `hugo server` and
+       draft previews don't pollute the stats. */ -}}
+{{- if eq hugo.Environment "production" -}}
+<script data-goatcounter="https://rheumatology-digest.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{{- end -}}
