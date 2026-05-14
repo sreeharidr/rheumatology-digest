@@ -78,7 +78,11 @@ User's existing offline workflow: select published paper → make a portrait HTM
 - **Tags — two-axis system** (see `memory/project_post_workflow.md` for the full taxonomy):
   - Disease: `sle`, `myositis`, `scleroderma`, `rheumatoid-arthritis`, `gout`, `axial-spondyloarthritis`, `vasculitis`, etc.
   - Theme: `treatment`, `diagnosis`, `pathophysiology`, `safety`, `guidelines`, `imaging`
-  - Optional: evidence type (`rct`, `meta-analysis`, `review`), drug name
+  - Optional: drug name (`methotrexate`, `jak-inhibitors`, `car-t`), topic (`ana`, `liver-disease`)
+- **Categories — `research` vs `reviews`:** every post must set `categories:` in front matter to one of:
+  - `["research"]` — original studies (RCTs, observational, EMR analyses, case series, basic science with clinical relevance)
+  - `["reviews"]` — review articles (narrative, systematic, Current Opinion-type, guidelines)
+  Top nav splits these at `/categories/research/` and `/categories/reviews/` so visitors can browse by article type.
 - **Image filename:** always `infographic.png` (or `.jpg`) for the hero image. Avoids re-editing `cover.image` per post.
 - **Cover behavior:** hidden on list pages (`params.cover.hiddenInList = true`), shown at top of the post itself.
 - **Permalinks:** `/posts/:slug/` — `:slug` comes from the explicit `slug` field set in front matter.
@@ -106,3 +110,4 @@ Things flagged but not yet done — pick these up when relevant:
 4. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
 5. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
 6. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
+7. **Future content sections** — case-based learning (`content/cases/`), quizzes (`content/quizzes/`), and learning modules (`content/modules/`) will live in their own sibling sections to `content/posts/`. Each gets its own top-nav entry when launched. Different from the research/reviews split (which is a category within posts) — these are entirely separate content types with their own layouts.

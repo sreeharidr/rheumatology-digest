@@ -4,8 +4,8 @@ date: 2026-05-11T17:30:00+05:30
 draft: false
 slug: "cellular-therapies-for-rheumatic-disease"
 author: "Dr. Sree Hari Reddy MD"
-tags: ["sle", "myositis", "scleroderma", "treatment", "review", "car-t"]
-categories: ["review"]
+tags: ["sle", "myositis", "scleroderma", "treatment", "car-t"]
+categories: ["reviews"]
 summary: "CD19 CAR-T cellular therapy delivers drug-free remission in 80–85% of refractory SLE patients in early-phase trials, with similar signals in IIM and SSc — the first credible attempt at true immunological reset in autoimmune rheumatic disease."
 cover:
   image: "infographic.png"

@@ -28,6 +28,16 @@ buildExpired = false
     url = '/posts/'
     weight = 10
   [[menu.main]]
+    identifier = 'research'
+    name = 'Research'
+    url = '/categories/research/'
+    weight = 15
+  [[menu.main]]
+    identifier = 'reviews'
+    name = 'Reviews'
+    url = '/categories/reviews/'
+    weight = 16
+  [[menu.main]]
     identifier = 'tags'
     name = 'Tags'
     url = '/tags/'
