@@ -11,64 +11,58 @@
 {{- end -}}
 
 <style>
-/* WhatsApp channel CTA */
-.wa-cta {
+/* Post-footer actions: WhatsApp follow + native share, side by side */
+.rd-actions {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: 10px;
-  padding: 14px 18px;
-  margin: 32px 0 16px;
+  margin: 40px 0 12px;
 }
-.wa-cta-link {
+.rd-action {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 8px;
+  text-decoration: none !important;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: inherit;
+  transition: opacity 0.15s, background 0.15s, transform 0.05s;
+  white-space: nowrap;
+}
+.rd-action:active { transform: translateY(1px); }
+.rd-action svg { flex-shrink: 0; }
+
+.rd-action--wa {
   background: #25D366;
   color: #fff !important;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 9px 18px;
-  border-radius: 7px;
-  text-decoration: none !important;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.15s;
 }
-.wa-cta-link:hover { background: #1aab54; }
-.wa-cta-text {
-  font-size: 0.875rem;
-  line-height: 1.4;
-  color: #374151;
-}
-.dark .wa-cta { background: #052e16; border-color: #14532d; }
-.dark .wa-cta-text { color: #9ca3af; }
+.rd-action--wa:hover { background: #1aab54; }
 
-/* Native share button */
-.rd-share-wrap { margin-top: 10px; }
-.rd-share-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: transparent;
-  border: 1px solid rgba(0,0,0,0.22);
-  border-radius: 7px;
-  padding: 8px 16px;
-  font-size: 0.875rem;
-  cursor: pointer;
-  color: inherit;
-  transition: border-color 0.15s;
+.rd-action--share {
+  background: var(--primary);
+  color: var(--theme) !important;
 }
-.rd-share-btn:hover { border-color: rgba(0,0,0,0.55); }
-.dark .rd-share-btn { border-color: rgba(255,255,255,0.22); }
-.dark .rd-share-btn:hover { border-color: rgba(255,255,255,0.55); }
+.rd-action--share:hover { opacity: 0.85; }
+
 .rd-copy-feedback {
-  margin-left: 10px;
-  font-size: 0.8rem;
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+  font-size: 0.85rem;
   color: #16a34a;
-  vertical-align: middle;
+  min-height: 1.2em;
+}
+.dark .rd-copy-feedback { color: #4ade80; }
+
+@media (max-width: 480px) {
+  .rd-actions { gap: 10px; }
+  .rd-action { flex: 1 1 100%; justify-content: center; }
+  .rd-copy-feedback { text-align: center; }
 }
 </style>
