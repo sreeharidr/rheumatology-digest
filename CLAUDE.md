@@ -8,8 +8,10 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 - **Theme:** [PaperMod](https://github.com/adityatelange/hugo-PaperMod), installed as a **git submodule** at `themes/PaperMod`
 - **Source:** [`sreeharidr/rheumatology-digest`](https://github.com/sreeharidr/rheumatology-digest) (public)
 - **Build & host:** **GitHub Pages** via GitHub Actions workflow (`.github/workflows/hugo.yml`). Cloudflare Pages was tried first and abandoned due to build issues; migration back is trivial if needed.
-- **Live URL:** https://sreeharidr.github.io/rheumatology-digest/
-- **Eventual URL:** TBD — user may buy `rheumatologydigest.com` later. Free interim option: `digest.rheumatology.center` (parent domain already in Cloudflare; not yet wired up).
+- **DNS:** Cloudflare (DNS-only / gray cloud — not proxied). Four `A` records on the apex pointing at GitHub Pages IPs (`185.199.108–111.153`) + a `CNAME` for `www` → `sreeharidr.github.io`.
+- **Live URL:** **https://rheumatologydigest.org/** (apex, HTTPS-enforced, Let's Encrypt cert via GitHub Pages). `www.` redirects to apex; old `sreeharidr.github.io/rheumatology-digest/` also redirects.
+- **Search Console:** verified for `rheumatologydigest.org` (domain property) via Cloudflare↔Google OAuth integration. Sitemap submitted at `/sitemap.xml`.
+- **Analytics:** GoatCounter (`rheumatology-digest.goatcounter.com`), JS pixel injected in `layouts/partials/extend_head.html`, **production builds only** (so `hugo server` doesn't pollute stats).
 
 ## Repo layout
 
@@ -28,10 +30,15 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 │           ├── index.md
 │           └── infographic.png
 ├── layouts/
+│   ├── partials/
+│   │   ├── extend_head.html        # GoatCounter snippet (prod only) + site-wide CSS (WhatsApp CTA + share button)
+│   │   └── share_icons.html        # Override of PaperMod's share row — WhatsApp channel CTA + single native-share button (Web Share API → clipboard fallback)
 │   └── shortcodes/
 │       └── source.html             # {{< source >}} — citation block from front matter
+├── static/
+│   └── CNAME                       # Tells GitHub Pages the custom domain is rheumatologydigest.org
 ├── themes/PaperMod/                # Git submodule — do not edit directly
-├── hugo.toml                       # Site config
+├── hugo.toml                       # Site config (baseURL is authoritative — workflow does NOT override it)
 └── README.md
 ```
 
@@ -54,12 +61,16 @@ User's existing offline workflow: select published paper → make a portrait HTM
    hugo new content posts/YYYY-MM-DD-<topic-slug>/index.md
    ```
    Use today's date and a URL-friendly slug. Example: `2026-05-13-jak-inhibitors-cv-risk`.
+   **Date gotcha:** `buildFuture = false` in `hugo.toml`. The `date:` in front matter must be in the past relative to current local time, or the post will 404 in dev AND be excluded from the production build. Default safe pattern: set `date:` to a couple of hours BEFORE the current local clock time — e.g. if it's 08:24 IST, use `T06:00:00+05:30`. Don't fix it to `T10:00:00` blindly — that's bitten us before, when scaffolding in the morning.
 
-2. **Edit front matter** — title (real clinical title), `summary`, `tags`, `source` block (authors / journal / year / DOI). Leave `slug` alone — auto-derived from folder name minus date prefix.
+2. **Edit front matter** — title (real clinical title), `summary`, `tags`, `categories` (`research` or `reviews`), `source` block (authors / journal / year / DOI). Leave `slug` alone — auto-derived from folder name minus date prefix. **DOI:** just put the bare DOI (e.g. `10.1056/NEJMra2415426`) into the `doi` field — the `source.html` shortcode auto-wraps it in a `https://doi.org/...` link. Leave `url` empty unless the article is open-access at a non-DOI URL.
 
 3. **Drop the infographic** into the same folder as `infographic.png`. The archetype already references this filename in `cover.image`.
 
-4. **Write the body** — TL;DR blockquote at top, then the user's clinical summary (in their voice — do NOT pre-draft commentary unless the user explicitly asks). End with `{{< source >}}` which renders the styled citation box from front matter.
+4. **Write the body** — TL;DR blockquote at top, then the user's clinical summary, ending with `{{< source >}}`. Voice rules:
+   - **TL;DR:** Claude drafts this. One sentence (max two), capturing the paper's thesis. User reviews and tweaks if needed. (Earlier convention said "user writes their own" — the user has since asked Claude to draft going forward to save round-trips.)
+   - **Body:** the user's clinical summary, in the user's voice. Do NOT pre-draft body commentary, interpretation, or "what this means" paragraphs unless the user explicitly asks.
+   - **Front-matter `summary`:** Claude drafts a 1–2 sentence SEO-grade extract (feeds Google snippets + WhatsApp link previews). User can edit.
 
 5. **Preview locally** at http://localhost:1313/posts/<slug>/. When ready, set `draft: false`.
 
@@ -105,9 +116,10 @@ User's existing offline workflow: select published paper → make a portrait HTM
 Things flagged but not yet done — pick these up when relevant:
 
 1. **Compress the 6 MB infographic** in `content/posts/2026-05-12-cellular-therapies-rheumatic-disease/` via TinyPNG. Hospital wifi load times + WhatsApp link previews.
-2. **Custom domain.** Either `digest.rheumatology.center` (free, parent already in Cloudflare) or eventual `rheumatologydigest.com`. Setting one up sooner = fewer github.io URLs in the wild that will 404 after the switch.
+2. **Fix `og:image` resolution.** Currently the OG/Twitter image meta tag resolves to `/infographic.png` (site root) instead of the post's own bundled image — so WhatsApp/Twitter link previews show a broken image. Likely needs a small layout override or correct use of the page-bundle image in the front-matter `cover` block.
 3. **Tag-based vector icons** instead of cover images on list pages — visual differentiation, requires SVG design work.
 4. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
 5. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
 6. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
 7. **Future content sections** — case-based learning (`content/cases/`), quizzes (`content/quizzes/`), and learning modules (`content/modules/`) will live in their own sibling sections to `content/posts/`. Each gets its own top-nav entry when launched. Different from the research/reviews split (which is a category within posts) — these are entirely separate content types with their own layouts.
+8. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
