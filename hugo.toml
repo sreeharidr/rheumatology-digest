@@ -1,4 +1,4 @@
-baseURL = 'https://digest.rheumatology.center/'
+baseURL = 'https://rheumatologydigest.org/'
 languageCode = 'en-us'
 title = 'Rheumatology Digest'
 theme = 'PaperMod'
