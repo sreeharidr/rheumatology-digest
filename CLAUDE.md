@@ -24,17 +24,24 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 ├── content/
 │   ├── archives.md                 # Stub for PaperMod's archives layout
 │   ├── search.md                   # Stub for PaperMod's search layout
-│   └── posts/                      # One folder per post (page bundles)
-│       ├── welcome.md              # Legacy single-file post
-│       └── YYYY-MM-DD-<slug>/      # Date-prefixed convention for new posts
-│           ├── index.md
-│           └── infographic.png
+│   ├── posts/                      # Daily clinical write-ups (page bundles)
+│   │   ├── welcome.md              # Legacy single-file post
+│   │   └── YYYY-MM-DD-<slug>/      # Date-prefixed convention for new posts
+│   │       ├── index.md
+│   │       └── infographic.png
+│   └── cases/                      # Interactive case-based learning (page bundles)
+│       ├── _index.md               # Section landing page front matter
+│       └── YYYY-MM-DD-<slug>/      # One folder per case
+│           └── index.md            # Markdown body with {{< case-mcq >}} shortcodes
 ├── layouts/
+│   ├── cases/
+│   │   └── single.html             # Custom layout for interactive cases — wraps each H2 in a gated <section>, hides all but the first, reveals next on MCQ Continue. Inlines the gating + MCQ JS.
 │   ├── partials/
-│   │   ├── extend_head.html        # GoatCounter snippet (prod only) + site-wide CSS (WhatsApp CTA + share button)
-│   │   └── share_icons.html        # Override of PaperMod's share row — WhatsApp channel CTA + single native-share button (Web Share API → clipboard fallback)
+│   │   ├── extend_head.html        # GoatCounter snippet (prod only) + ALL site-wide CSS (post-footer share row + case UI: section gating, MCQ option cards, rationale feedback, Continue button)
+│   │   └── share_icons.html        # Override of PaperMod's share row — WhatsApp channel CTA + single native-share button (Web Share API → clipboard fallback). Used by posts AND cases.
 │   └── shortcodes/
-│       └── source.html             # {{< source >}} — citation block from front matter
+│       ├── source.html             # {{< source >}} — citation block from front matter
+│       └── case-mcq.html           # {{< case-mcq >}} — interactive MCQ widget; parses YAML inner content (question + 3-4 options, each with optional `correct: true` + per-option rationale). On click, reveals ONLY the selected option's rationale; marks correct option with green border if user picked wrong.
 ├── static/
 │   └── CNAME                       # Tells GitHub Pages the custom domain is rheumatologydigest.org
 ├── themes/PaperMod/                # Git submodule — do not edit directly
@@ -82,6 +89,71 @@ User's existing offline workflow: select published paper → make a portrait HTM
    ```
    GitHub Actions deploys in ~30 seconds.
 
+## Per-case workflow
+
+Interactive case-based learning lives under `content/cases/`. Each case is a single markdown file built around `{{< case-mcq >}}` shortcodes — the page renders as a series of **gated sections** revealed one MCQ at a time.
+
+**Design philosophy (set with the first case, locked in for all future ones):**
+
+- **Drip-feed reveal.** Each `## ` H2 starts a new section. Sections after the first are hidden by JS until the prior MCQ is answered and Continue is clicked. The diagnosis stays hidden until ~3/4 through the case.
+- **Short body, MCQ-heavy.** Target ~12–14 sections per case. Each body block stays under ~80 words so it fits on one mobile screen. The teaching lives in the per-option rationales, NOT the body — keep the body just to "what does the reader have in front of them now".
+- **Selected-option feedback only.** When a reader picks an option, only THAT option's rationale appears. If they picked wrong, the correct option still gets a subtle green border on its answer button so they learn what was right.
+- **No scoring.** Purely educational; no tally, no test framing.
+- **Categories not used.** Cases use `tags` only (no `categories` field — research/reviews are a posts-only split).
+
+**Per case:**
+
+1. **Create the folder + scaffold:**
+   ```sh
+   hugo new content cases/YYYY-MM-DD-<topic-slug>/index.md
+   ```
+   Same date-gotcha as posts: keep the `date:` in the past relative to local clock time.
+
+2. **Edit front matter** — `title`, `summary` (SEO; Claude drafts), `description` (short page subtitle, optional), `tags`, `source` block (authors / journal / year / DOI). Set `slug:` explicitly. **Do NOT** set `categories:`.
+
+3. **Source PDF** lives in `~/Documents/NEJM Case Records/` (separate from the repo, like the posts archive). User provides the PDF; Claude reads it with the Read tool (poppler installed).
+
+4. **Write the body** as a sequence of `## ` sections, each ending with a `{{< case-mcq >}}` shortcode (except the final summary section, which has no MCQ — it auto-reveals when the last MCQ's Continue is clicked). End with `{{< source >}}`.
+
+5. **MCQ shortcode YAML schema:**
+   ```
+   {{< case-mcq >}}
+   question: |
+     Markdown question text.
+   options:
+     - text: Distractor A
+       rationale: |
+         Explain why this is wrong. Markdown supported (bold, italics, links).
+     - text: Correct answer
+       correct: true
+       rationale: |
+         Explain why this is right. Carry the teaching here.
+     - text: Distractor C
+       rationale: |
+         ...
+     - text: Distractor D
+       rationale: |
+         ...
+   {{< /case-mcq >}}
+   ```
+   3–4 options is typical (the letter labels A–F are auto-generated). Mark exactly one with `correct: true`.
+
+6. **Voice rules for case content:**
+   - Body of each section: clinical narrative only — what the team would have in front of them at that moment. **Don't leak the answer into the body** — that's the most common authoring mistake.
+   - **TL;DR / intro paragraph: do NOT add one.** Cases drop the reader straight into Section 1.
+   - **Rationales: Claude drafts these** in clinical-teacher voice; user edits if needed. Each rationale should be self-contained — the correct one explains the reasoning, distractors explain *why specifically that option is wrong* (and briefly point at the right answer).
+
+7. **Preview locally** at `http://localhost:1313/cases/<slug>/`. Verify gating (each MCQ unlocks the next section), selected-only feedback (your option's rationale appears; correct option gets a green border if you picked wrong).
+
+8. **Hugo dev-server gotcha:** when you change a shortcode or layout file, Hugo's Fast Render Mode can serve a stale render. If something looks broken (CSS missing, partial empty), kill the server and restart with `--disableFastRender`, or just restart it cleanly.
+
+9. **Commit + push:**
+   ```sh
+   git add content/cases/YYYY-MM-DD-<topic-slug>
+   git commit -m "Case: <topic>"
+   git push
+   ```
+
 ## Conventions
 
 - **Folder naming:** `YYYY-MM-DD-<slug>/` for posts. Date prefix is for chronological sorting in Finder; the archetype strips it from the URL slug automatically.
@@ -121,5 +193,5 @@ Things flagged but not yet done — pick these up when relevant:
 4. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
 5. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
 6. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
-7. **Future content sections** — case-based learning (`content/cases/`), quizzes (`content/quizzes/`), and learning modules (`content/modules/`) will live in their own sibling sections to `content/posts/`. Each gets its own top-nav entry when launched. Different from the research/reviews split (which is a category within posts) — these are entirely separate content types with their own layouts.
+7. **Remaining content sections** — quizzes (`content/quizzes/`) and learning modules (`content/modules/`) will be sibling sections to `content/posts/` and `content/cases/`, each with its own top-nav entry and layout. Different from the research/reviews split (a category WITHIN posts) — these are entirely separate content types. *Cases (`content/cases/`) launched May 2026 — see the "Per-case workflow" section above.*
 8. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.

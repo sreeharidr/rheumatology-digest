@@ -1,0 +1,75 @@
+{{- /*
+  case-mcq.html — Interactive MCQ widget for case-based learning.
+
+  Usage in markdown:
+    {{< case-mcq >}}
+    question: |
+      What is the most likely cause of this patient's rapidly progressive kidney failure?
+    options:
+      - text: ANCA-associated vasculitis
+        rationale: |
+          Markdown rationale here — explain why this option is wrong and what's right.
+      - text: Cryoglobulinemic glomerulonephritis
+        correct: true
+        rationale: |
+          Markdown rationale explaining why this is the right answer.
+      - text: Lupus nephritis
+        rationale: |
+          ...
+    {{< /case-mcq >}}
+
+  After the reader picks an option, ONLY that option's rationale is shown.
+  If they picked wrong, the correct option still gets a subtle green border
+  on the answer button so they learn what was right.
+*/ -}}
+
+{{- $data := .Inner | transform.Unmarshal -}}
+{{- $letters := slice "A" "B" "C" "D" "E" "F" -}}
+
+<div class="case-mcq" data-case-mcq>
+  <div class="case-mcq-question">
+    {{ $data.question | markdownify }}
+  </div>
+
+  <div class="case-mcq-options" role="radiogroup" aria-label="Answer options">
+    {{- range $i, $opt := $data.options -}}
+    <button class="case-mcq-option"
+            type="button"
+            role="radio"
+            aria-checked="false"
+            data-correct="{{ if $opt.correct }}true{{ else }}false{{ end }}"
+            data-index="{{ $i }}">
+      <span class="case-mcq-option-letter" aria-hidden="true">{{ index $letters $i }}</span>
+      <span class="case-mcq-option-text">{{ $opt.text }}</span>
+      <span class="case-mcq-option-mark" aria-hidden="true"></span>
+    </button>
+    {{- end -}}
+  </div>
+
+  <div class="case-mcq-feedback" data-case-feedback hidden>
+    {{- range $i, $opt := $data.options -}}
+    <div class="case-mcq-rationale"
+         data-for-index="{{ $i }}"
+         data-is-correct="{{ if $opt.correct }}true{{ else }}false{{ end }}">
+      <div class="case-mcq-rationale-status">
+        {{- if $opt.correct -}}
+        <span class="case-mcq-rationale-status-icon" aria-hidden="true">✓</span> Correct
+        {{- else -}}
+        <span class="case-mcq-rationale-status-icon" aria-hidden="true">✗</span> Not quite — the correct answer is highlighted above
+        {{- end -}}
+      </div>
+      <div class="case-mcq-rationale-body">
+        {{ $opt.rationale | markdownify }}
+      </div>
+    </div>
+    {{- end -}}
+
+    <button class="case-continue" type="button" data-case-continue>
+      <span>Continue</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+{{- define "main" -}}
+<article class="case-single">
+  <header class="case-header">
+    {{ partial "breadcrumbs.html" . }}
+    <div class="case-eyebrow">Interactive case · Test your reasoning</div>
+    <h1 class="case-title">{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="case-subtitle">{{ . }}</p>
+    {{- end }}
+    <div class="case-meta">
+      {{- partial "post_meta.html" . -}}
+    </div>
+  </header>
+
+  {{- if .Content }}
+  <div class="case-content md-content">
+    {{ .Content }}
+  </div>
+  {{- end }}
+
+  <footer class="case-footer">
+    {{- partial "share_icons.html" . -}}
+  </footer>
+</article>
+
+<script>
+(function () {
+  'use strict';
+  const content = document.querySelector('.case-content');
+  if (!content) return;
+
+  /* Step 1 — Wrap content into sections, one per H2 heading.
+     Anything before the first H2 is a free-flowing preamble (always visible). */
+  const children = Array.from(content.children);
+  const groups = [];
+  const preamble = [];
+  let current = null;
+  children.forEach((child) => {
+    if (child.tagName === 'H2') {
+      if (current) groups.push(current);
+      current = { heading: child, body: [] };
+    } else if (current) {
+      current.body.push(child);
+    } else {
+      preamble.push(child);
+    }
+  });
+  if (current) groups.push(current);
+
+  /* Step 2 — Rebuild the content with sections. Sections after the first are
+     hidden via `data-locked` until the previous MCQ has been answered + Continue. */
+  content.innerHTML = '';
+  preamble.forEach((el) => content.appendChild(el));
+  groups.forEach((g, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'case-section';
+    sec.dataset.sectionIndex = String(i);
+    if (i > 0) sec.dataset.locked = 'true';
+    sec.appendChild(g.heading);
+    g.body.forEach((el) => sec.appendChild(el));
+    content.appendChild(sec);
+  });
+
+  /* Step 3 — Wire up each MCQ widget.
+     On click: lock the MCQ, mark the chosen option (green if correct, red if
+     wrong), subtly mark the correct option if the user picked wrong, and
+     reveal ONLY the chosen option's rationale. */
+  document.querySelectorAll('[data-case-mcq]').forEach((mcq) => {
+    const options = Array.from(mcq.querySelectorAll('.case-mcq-option'));
+    const feedback = mcq.querySelector('[data-case-feedback]');
+    const rationales = Array.from(mcq.querySelectorAll('.case-mcq-rationale'));
+
+    options.forEach((opt) => {
+      opt.addEventListener('click', () => {
+        if (mcq.dataset.answered === 'true') return;
+        mcq.dataset.answered = 'true';
+
+        const correct = opt.dataset.correct === 'true';
+        const chosenIndex = parseInt(opt.dataset.index, 10);
+
+        opt.classList.add('is-selected', correct ? 'is-correct' : 'is-incorrect');
+        opt.setAttribute('aria-checked', 'true');
+
+        options.forEach((o) => {
+          o.disabled = true;
+          if (o !== opt && o.dataset.correct === 'true') {
+            o.classList.add('is-correct-answer');
+          }
+        });
+
+        rationales.forEach((r) => {
+          if (parseInt(r.dataset.forIndex, 10) === chosenIndex) {
+            r.classList.add('is-active');
+          }
+        });
+
+        if (feedback) {
+          feedback.hidden = false;
+          requestAnimationFrame(() => {
+            feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          });
+        }
+      });
+    });
+
+    const continueBtn = mcq.querySelector('[data-case-continue]');
+    if (continueBtn) {
+      continueBtn.addEventListener('click', () => {
+        const section = mcq.closest('.case-section');
+        if (!section) return;
+        const idx = parseInt(section.dataset.sectionIndex, 10);
+        const next = document.querySelector(
+          '.case-section[data-section-index="' + (idx + 1) + '"]'
+        );
+        if (next) {
+          delete next.dataset.locked;
+          requestAnimationFrame(() => {
+            next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        }
+      });
+    }
+  });
+})();
+</script>
+{{- end -}}
