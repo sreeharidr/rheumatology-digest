@@ -36,6 +36,7 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 ├── layouts/
 │   ├── cases/
 │   │   └── single.html             # Custom layout for interactive cases — wraps each H2 in a gated <section>, hides all but the first, reveals next on MCQ Continue. Inlines the gating + MCQ JS.
+│   ├── list.html                   # Override of PaperMod's list.html — single change: injects an "Interactive case" eyebrow badge for entries from the `cases` section. Used by homepage (mixed feed) and /cases/.
 │   ├── partials/
 │   │   ├── extend_head.html        # GoatCounter snippet (prod only) + ALL site-wide CSS (post-footer share row + case UI: section gating, MCQ option cards, rationale feedback, Continue button)
 │   │   └── share_icons.html        # Override of PaperMod's share row — WhatsApp channel CTA + single native-share button (Web Share API → clipboard fallback). Used by posts AND cases.
@@ -168,7 +169,8 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
   Top nav splits these at `/categories/research/` and `/categories/reviews/` so visitors can browse by article type.
 - **Image filename:** always `infographic.png` (or `.jpg`) for the hero image. Avoids re-editing `cover.image` per post.
 - **Cover behavior:** hidden on list pages (`params.cover.hiddenInList = true`), shown at top of the post itself.
-- **Permalinks:** `/posts/:slug/` — `:slug` comes from the explicit `slug` field set in front matter.
+- **Permalinks:** `/posts/:slug/` and `/cases/:slug/` — `:slug` comes from the explicit `slug` field set in front matter.
+- **Homepage feed = `mainSections`.** `[params] mainSections = ['posts', 'cases']` in `hugo.toml` controls what the homepage list (and home RSS) pulls in. Add any new content section here when launching it (e.g. quizzes, modules). Section landing pages (`/posts/`, `/cases/`) stay filtered to their own section regardless.
 
 ## Working with this user
 
