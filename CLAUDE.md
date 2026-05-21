@@ -82,7 +82,11 @@ User's existing offline workflow: select published paper → make a portrait HTM
 
 5. **Preview locally** at http://localhost:1313/posts/<slug>/. When ready, set `draft: false`.
 
-6. **Commit + push:**
+6. **Pre-push checklist — verify these before committing:**
+   - `draft: false` is set. Hugo silently excludes `draft: true` posts from production builds — the page 404s with no build error. This has burned us before.
+   - The body is not empty. There must be actual content between the TL;DR blockquote and `{{< source >}}`. If the user says "done, push it", read the file first and confirm body content exists before proceeding. If the body is empty, ask the user to paste their summary rather than pushing an empty post.
+
+7. **Commit + push:**
    ```sh
    git add content/posts/YYYY-MM-DD-<topic-slug>
    git commit -m "Post: <topic title>"
@@ -148,12 +152,16 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 8. **Hugo dev-server gotcha:** when you change a shortcode or layout file, Hugo's Fast Render Mode can serve a stale render. If something looks broken (CSS missing, partial empty), kill the server and restart with `--disableFastRender`, or just restart it cleanly.
 
-9. **Commit + push:**
-   ```sh
-   git add content/cases/YYYY-MM-DD-<topic-slug>
-   git commit -m "Case: <topic>"
-   git push
-   ```
+9. **Pre-push checklist — verify these before committing:**
+   - `draft: false` is set. Same gotcha as posts — `draft: true` silently excludes the page from production.
+   - The body contains at least one `## ` section and one `{{< case-mcq >}}` shortcode. If the file is only front matter + `{{< source >}}`, it is not ready to push.
+
+10. **Commit + push:**
+    ```sh
+    git add content/cases/YYYY-MM-DD-<topic-slug>
+    git commit -m "Case: <topic>"
+    git push
+    ```
 
 ## Conventions
 
