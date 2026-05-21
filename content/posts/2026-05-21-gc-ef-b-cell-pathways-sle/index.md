@@ -1,7 +1,7 @@
 ---
 title: "Germinal-Centre and Extrafollicular B Cell Pathways in Systemic Lupus Erythematosus"
 date: 2026-05-21T07:11:06+05:30
-draft: true
+draft: false
 slug: "gc-ef-b-cell-pathways-sle"
 author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "pathophysiology", "treatment", "car-t"]
