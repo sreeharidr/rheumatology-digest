@@ -108,9 +108,7 @@ jobs:
             esac
 
             URL="https://rheumatologydigest.org/${SECTION}/${SLUG}/"
-            CAPTION="${TITLE}
-
-${URL}"
+            CAPTION=$(printf '%s\n\n%s' "$TITLE" "$URL")
 
             IMAGE=$(find "$DIR" -maxdepth 1 -iname 'infographic.*' | head -n1)
 
