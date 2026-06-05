@@ -39,6 +39,11 @@ buildExpired = false
     url = '/categories/reviews/'
     weight = 16
   [[menu.main]]
+    identifier = 'guidelines'
+    name = 'Guidelines'
+    url = '/categories/guidelines/'
+    weight = 17
+  [[menu.main]]
     identifier = 'cases'
     name = 'Cases'
     url = '/cases/'

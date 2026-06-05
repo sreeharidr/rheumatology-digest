@@ -171,10 +171,11 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
   - Disease: `sle`, `myositis`, `scleroderma`, `rheumatoid-arthritis`, `gout`, `axial-spondyloarthritis`, `vasculitis`, etc.
   - Theme: `treatment`, `diagnosis`, `pathophysiology`, `safety`, `guidelines`, `imaging`
   - Optional: drug name (`methotrexate`, `jak-inhibitors`, `car-t`), topic (`ana`, `liver-disease`)
-- **Categories — `research` vs `reviews`:** every post must set `categories:` in front matter to one of:
+- **Categories — `research` vs `reviews` vs `guidelines`:** every post must set `categories:` in front matter to one of:
   - `["research"]` — original studies (RCTs, observational, EMR analyses, case series, basic science with clinical relevance)
-  - `["reviews"]` — review articles (narrative, systematic, Current Opinion-type, guidelines)
-  Top nav splits these at `/categories/research/` and `/categories/reviews/` so visitors can browse by article type.
+  - `["reviews"]` — review articles (narrative, systematic, Current Opinion-type)
+  - `["guidelines"]` — formal society recommendations / consensus statements / management guidelines (e.g. EULAR/ACR recommendations). Durable reference material, distinct from one-off review articles.
+  Top nav splits these at `/categories/research/`, `/categories/reviews/` and `/categories/guidelines/` so visitors can browse by article type.
 - **Image filename:** always `infographic.png` (or `.jpg`) for the hero image. Avoids re-editing `cover.image` per post.
 - **Cover behavior:** hidden on list pages (`params.cover.hiddenInList = true`), shown at top of the post itself.
 - **Permalinks:** `/posts/:slug/` and `/cases/:slug/` — `:slug` comes from the explicit `slug` field set in front matter.
