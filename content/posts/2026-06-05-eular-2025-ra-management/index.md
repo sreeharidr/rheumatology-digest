@@ -4,7 +4,7 @@ date: 2026-06-05T13:00:00+01:00
 draft: false
 slug: "eular-2025-ra-management"
 author: "Dr. Sree Hari Reddy MD"
-tags: ["rheumatoid-arthritis", "treatment", "guidelines", "safety", "jak-inhibitors", "methotrexate"]
+tags: ["rheumatoid-arthritis", "treatment", "safety", "jak-inhibitors", "methotrexate"]
 categories: ["guidelines"]
 summary: "The 2025 EULAR update streamlines RA management to 5 overarching principles and 9 recommendations, abandons post-methotrexate prognostic risk stratification, and keeps JAK inhibitors co-equal with biologics after individual risk assessment."
 cover:

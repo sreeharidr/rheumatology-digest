@@ -4,7 +4,7 @@ date: 2026-05-25T06:00:00+05:30
 draft: false
 slug: "rzv-immunosuppression-review"
 author: "Dr. Sree Hari Reddy MD"
-tags: ["vaccination", "safety", "guidelines", "rheumatoid-arthritis", "sle"]
+tags: ["vaccination", "safety", "rheumatoid-arthritis", "sle"]
 categories: ["reviews"]
 summary: "A 2026 RMD Open narrative review of recombinant zoster vaccine (RZV) in inflammatory rheumatic disease — robust efficacy across IRD cohorts (~95% reduction in HZ recurrence; 54–70% effectiveness in SLE), no meaningful short-term flare signal in RCT data, and a practical drug-by-drug timing framework spanning csDMARDs, biologics, JAK inhibitors and B-cell depletion."
 cover:

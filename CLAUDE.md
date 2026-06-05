@@ -169,7 +169,7 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 - **Slug:** must be set via the `slug:` field for stability — never derived from title, since title changes would break URLs.
 - **Tags — two-axis system** (see `memory/project_post_workflow.md` for the full taxonomy):
   - Disease: `sle`, `myositis`, `scleroderma`, `rheumatoid-arthritis`, `gout`, `axial-spondyloarthritis`, `vasculitis`, etc.
-  - Theme: `treatment`, `diagnosis`, `pathophysiology`, `safety`, `guidelines`, `imaging`
+  - Theme: `treatment`, `diagnosis`, `pathophysiology`, `safety`, `imaging` (note: **do not** use `guidelines` as a tag — it is a category now, and a term that exists in both taxonomies breaks PaperMod's nav with an "ambiguous page reference" build error)
   - Optional: drug name (`methotrexate`, `jak-inhibitors`, `car-t`), topic (`ana`, `liver-disease`)
 - **Categories — `research` vs `reviews` vs `guidelines`:** every post must set `categories:` in front matter to one of:
   - `["research"]` — original studies (RCTs, observational, EMR analyses, case series, basic science with clinical relevance)
