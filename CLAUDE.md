@@ -85,6 +85,7 @@ User's existing offline workflow: select published paper → make a portrait HTM
 6. **Pre-push checklist — verify these before committing:**
    - `draft: false` is set. Hugo silently excludes `draft: true` posts from production builds — the page 404s with no build error. This has burned us before.
    - The body is not empty. There must be actual content between the TL;DR blockquote and `{{< source >}}`. If the user says "done, push it", read the file first and confirm body content exists before proceeding. If the body is empty, ask the user to paste their summary rather than pushing an empty post.
+   - **No taxonomy-term collisions.** A term must NOT appear in both `tags` and `categories`. In particular `guidelines` is a **category only** — never put it in `tags`. A term in two taxonomies breaks PaperMod's nav with a fatal `page reference "<term>" is ambiguous` build error (happened with `guidelines` once). Same rule applies to `research`/`reviews` — keep them out of tags.
 
 7. **Commit + push:**
    ```sh
