@@ -199,11 +199,10 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 Things flagged but not yet done — pick these up when relevant:
 
-1. **Compress the 6 MB infographic** in `content/posts/2026-05-12-cellular-therapies-rheumatic-disease/` via TinyPNG. Hospital wifi load times + WhatsApp link previews.
-2. **Fix `og:image` resolution.** Currently the OG/Twitter image meta tag resolves to `/infographic.png` (site root) instead of the post's own bundled image — so WhatsApp/Twitter link previews show a broken image. Likely needs a small layout override or correct use of the page-bundle image in the front-matter `cover` block.
-3. **Tag-based vector icons** instead of cover images on list pages — visual differentiation, requires SVG design work.
-4. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
-5. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
-6. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
-7. **Remaining content sections** — quizzes (`content/quizzes/`) and learning modules (`content/modules/`) will be sibling sections to `content/posts/` and `content/cases/`, each with its own top-nav entry and layout. Different from the research/reviews split (a category WITHIN posts) — these are entirely separate content types. *Cases (`content/cases/`) launched May 2026 — see the "Per-case workflow" section above.*
-8. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
+1. **Fix `og:image` resolution.** Currently the OG/Twitter image meta tag resolves to `/infographic.png` (site root) instead of the post's own bundled image — so WhatsApp/Twitter link previews show a broken image. Likely needs a small layout override or correct use of the page-bundle image in the front-matter `cover` block.
+2. **Tag-based vector icons** instead of cover images on list pages — visual differentiation, requires SVG design work.
+3. **`rdpost` shell helper** — wraps `hugo new` + `open` to skip Finder navigation when creating posts. Defer until folder navigation actually feels slow.
+4. **Bump GitHub Actions to Node 24** — `actions/checkout@v4`, `configure-pages@v5`, `upload-artifact@v4`, `deploy-pages@v4` are flagged for forced Node 24 from June 2, 2026. Update versions when convenient.
+5. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
+6. **Remaining content sections** — quizzes (`content/quizzes/`) and learning modules (`content/modules/`) will be sibling sections to `content/posts/` and `content/cases/`, each with its own top-nav entry and layout. Different from the research/reviews split (a category WITHIN posts) — these are entirely separate content types. *Cases (`content/cases/`) launched May 2026 — see the "Per-case workflow" section above.*
+7. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
