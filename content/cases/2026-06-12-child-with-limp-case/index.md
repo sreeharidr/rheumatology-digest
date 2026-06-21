@@ -18,7 +18,7 @@ source:
 
 ## 1. The Presentation
 
-A previously healthy 7-year-old girl presents with **6 weeks** of pain in both legs and a limp, with no preceding fall or trauma. The pain began around the knees and shins, is **worse in the afternoons and evenings**, and has steadily progressed — she now struggles to climb stairs and rise from a chair. Ibuprofen and paracetamol give only brief relief. She has noticed no warmth, redness or swelling.
+A previously well 7-year-old girl is brought in with **6 weeks** of pain in both legs and a limp, with no fall or injury beforehand. The pain started around the knees and shins, tends to be **worse later in the day**, and has gradually intensified — she now finds it hard to climb stairs or get up from sitting. Paracetamol and ibuprofen help only briefly. There has been no warmth, redness or swelling.
 
 {{< case-mcq >}}
 question: |
@@ -64,7 +64,7 @@ options:
 
 ## 3. The Examination
 
-Vital signs are normal and she is afebrile. Growth is on the 50th percentile (23 kg, 122 cm; BMI 15.5). Her gait is **antalgic** and she is reluctant to bear weight on the left leg; left-knee flexion is markedly limited by pain. There is **tenderness over the distal femurs and proximal tibias bilaterally**. There is **no joint effusion, warmth or erythema**. The skin is dry, with no rash, petechiae or purpura; no lymphadenopathy or organomegaly. Neurological exam is normal.
+Her vital signs are normal and she is afebrile, and she is growing normally (23 kg and 122 cm, both 50th percentile; BMI 15.5). She walks with an **antalgic gait** and will not put full weight through the left leg, where bending the knee is sharply painful and restricted. On palpation both lower limbs are tender over the **metaphyseal regions — the lower femurs and upper tibias** — but the joints themselves are quiet: **no effusion, warmth or redness**. Her skin is dry and free of rash, petechiae or purpura, with no enlarged lymph nodes or organomegaly, and the neurological examination is unremarkable.
 
 {{< case-mcq >}}
 question: |
