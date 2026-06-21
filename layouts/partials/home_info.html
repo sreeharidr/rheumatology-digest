@@ -1,0 +1,46 @@
+{{- /* Project override of PaperMod's home_info.html.
+       Replaces the plain title+blurb with a minimalist hero + section cards.
+       Text still comes from [params.homeInfoParams] in hugo.toml so it stays
+       editable in config. Cards link to the main browse buckets. */ -}}
+<section class="rd-hero">
+  <p class="rd-hero-eyebrow">Educational rheumatology</p>
+  <h1 class="rd-hero-title">
+    {{- with site.Params.homeInfoParams.Title }}{{ . }}{{ else }}{{ site.Title }}{{ end -}}
+  </h1>
+  {{- with site.Params.homeInfoParams.Content }}
+  <p class="rd-hero-tagline">{{ . | markdownify }}</p>
+  {{- end }}
+
+  <nav class="rd-cards" aria-label="Browse by type">
+    <a class="rd-card rd-card--reviews" href="{{ "categories/reviews/" | absURL }}">
+      <span class="rd-card-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </span>
+      <span class="rd-card-label">Reviews</span>
+      <span class="rd-card-desc">Narrative &amp; systematic reviews</span>
+    </a>
+    <a class="rd-card rd-card--guidelines" href="{{ "categories/guidelines/" | absURL }}">
+      <span class="rd-card-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </span>
+      <span class="rd-card-label">Guidelines</span>
+      <span class="rd-card-desc">Society recommendations</span>
+    </a>
+    <a class="rd-card rd-card--cases" href="{{ "cases/" | absURL }}">
+      <span class="rd-card-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="10 8 14 12 10 16"/></svg>
+      </span>
+      <span class="rd-card-label">Cases</span>
+      <span class="rd-card-desc">Interactive case learning</span>
+    </a>
+    <a class="rd-card rd-card--research" href="{{ "categories/research/" | absURL }}">
+      <span class="rd-card-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L5 19a1 1 0 0 0 .9 1.5h12.2A1 1 0 0 0 19 19l-5-9.5V3"/></svg>
+      </span>
+      <span class="rd-card-label">Research</span>
+      <span class="rd-card-desc">Original studies</span>
+    </a>
+  </nav>
+</section>
+
+<h2 class="rd-latest-label">Latest</h2>

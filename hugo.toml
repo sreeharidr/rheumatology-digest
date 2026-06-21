@@ -89,7 +89,7 @@ buildExpired = false
 
   [params.homeInfoParams]
     Title = 'Rheumatology Digest'
-    Content = 'Educational rheumatology content for clinicians — daily digest entries, cases, and learning modules by Dr. Sree Hari Reddy MD.'
+    Content = 'Educational rheumatology content for clinicians — daily digest entries, cases, and learning modules.'
 
   [params.fuseOpts]
     isCaseSensitive = false
