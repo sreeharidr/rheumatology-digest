@@ -63,6 +63,11 @@ buildExpired = false
     name = 'Search'
     url = '/search/'
     weight = 40
+  [[menu.main]]
+    identifier = 'about'
+    name = 'About'
+    url = '/about/'
+    weight = 50
 
 [params]
   env = 'production'
