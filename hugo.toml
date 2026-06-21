@@ -72,8 +72,9 @@ buildExpired = false
 [params]
   env = 'production'
   author = 'Dr. Sree Hari Reddy MD'
-  description = 'Educational rheumatology content for clinicians by Dr. Sree Hari Reddy MD.'
+  description = 'Educational rheumatology content for clinicians.'
   defaultTheme = 'auto'
+  hideAuthor = true
   mainSections = ['posts', 'cases']
   ShowReadingTime = true
   ShowShareButtons = true
