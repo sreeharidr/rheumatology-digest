@@ -198,12 +198,4 @@ All events were adjudicated by an **independent, blinded clinical endpoint commi
 6. **For CTD-PAH specifically**, a stratified subgroup of 194 patients showed a consistent direction of benefit, supporting timely triple-pathway escalation in a phenotype with historically poor outcomes.
 7. **Unanswered questions:** how ralinepag compares directly with selexipag or inhaled prostacyclins; whether the titration burden can be reduced without losing efficacy; whether the morbidity benefit eventually translates into mortality benefit; and how it should be sequenced relative to sotatercept in the modern four-pathway landscape.
 
-## Teaching Note
-
-This paper is an unusually clean vehicle for teaching **composite endpoint anatomy**. Cover the headline hazard ratio and read only the component table — then ask what you would conclude. The exercise makes visible that *"reduced clinical worsening by 55%"* and *"no difference in death or hospitalisation"* are both true statements about the same dataset.
-
-A second point: **what a trial measures determines what it can find.** Here the endpoint definition was widened to capture morbidity signals in a population too well-treated to generate mortality events within four years — the same methodological move, in a different register, as lowering an assay threshold or refining imaging criteria. Redefining the outcome redraws the boundary of what counts as treatment failure, exactly as redefining a biomarker redraws the boundary of what counts as disease. The 2022 haemodynamic criteria (PVR >2 WU) applied here make the point twice over within a single paper.
-
-A third discussion prompt: with adverse events in 99% versus 95% and a doubling of total event counts, is a placebo-controlled trial of a prostacyclin agent ever meaningfully blind — and what would an adequately masked design even look like?
-
 {{< source >}}
