@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 pictorial review of the conditions that mimic sacroiliitis on SIJ MRI — bone marrow oedema is sensitive but the least specific sign, and overcalling it risks committing patients to lifelong biologic therapy. Erosion, lesion combinations, topographic location, semi-axial imaging and clinical context are the defences against false-positive reads."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "MRI sacroiliitis mimics — distinguishing axSpA from its imaging look-alikes"
   hidden: false
 source:

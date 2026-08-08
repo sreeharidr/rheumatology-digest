@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 RMD Open narrative review of recombinant zoster vaccine (RZV) in inflammatory rheumatic disease — robust efficacy across IRD cohorts (~95% reduction in HZ recurrence; 54–70% effectiveness in SLE), no meaningful short-term flare signal in RCT data, and a practical drug-by-drug timing framework spanning csDMARDs, biologics, JAK inhibitors and B-cell depletion."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Recombinant Zoster Vaccine in Inflammatory Rheumatic Disease — RMD Open 2026 narrative review"
   hidden: false
 source:

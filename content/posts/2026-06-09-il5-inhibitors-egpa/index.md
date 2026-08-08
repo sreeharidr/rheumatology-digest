@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 narrative review of the IL-5/eosinophil axis in eosinophilic granulomatosis with polyangiitis (EGPA) and the two approved IL-5 pathway inhibitors — mepolizumab and benralizumab — covering their mechanisms, MIRRA and MANDARA trial evidence, real-world data, guideline positioning, and the remaining unmet needs."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "IL-5 pathway and eosinophil-targeting therapies in EGPA"
   hidden: false
 source:

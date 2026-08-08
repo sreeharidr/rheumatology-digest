@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 review of pathogenesis-directed SLE therapeutics anchored to the 2025 ACR SLE and 2024 ACR lupus nephritis guidelines — the FDA-approved and off-label drugs by mechanism, indication and monitoring, plus the metabolic/mitochondrial, IL-1, cardiometabolic and non-pharmacological strategies, mapped by organ manifestation."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Pathogenesis-directed lupus therapeutics mapped by mechanism and manifestation"
   hidden: false
 source:

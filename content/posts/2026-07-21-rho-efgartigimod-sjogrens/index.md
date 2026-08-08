@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "RHO is a phase 2 proof-of-concept RCT of the FcRn antagonist efgartigimod in Sjögren's disease, testing whether removing pathogenic IgG autoantibodies improves disease. It met its exploratory objective (CRESS response 45.5% vs 11.1% at week 24) with deep, selective IgG reduction — but systemic activity improved while patient-reported symptoms did not, and the tiny sample means this justifies phase 3, not practice change."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "RHO trial — efgartigimod, an FcRn antagonist, in Sjögren's disease"
   hidden: false
 source:

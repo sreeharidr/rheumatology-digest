@@ -7,8 +7,12 @@ author: "Dr. Sree Hari Reddy MD"
 tags: []
 categories: []
 summary: ""
+# description: SEO meta description — MUST be <=155 chars. Judgement first, numbers stay in the post.
+# Pattern: what changed / what the catch is. Not the trial name.
+description: ""
 cover:
   image: "infographic.png"
+  relative: true
   alt: ""
   hidden: false
 source:

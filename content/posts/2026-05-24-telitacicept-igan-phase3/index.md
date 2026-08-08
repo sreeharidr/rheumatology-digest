@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["igan", "treatment", "pathophysiology", "telitacicept"]
 categories: ["research"]
 summary: "In the TELIGAN phase 3 trial, telitacicept — a dual BAFF/APRIL inhibitor already approved for SLE — reduced 24-hour proteinuria by 55% relative to placebo at 39 weeks in adults with IgA nephropathy, with eGFR remaining stable on treatment while declining on placebo."
+description: "Telitacicept cut proteinuria by 55% in IgA nephropathy and held eGFR steady while placebo declined — but this is a 39-week interim, not final data."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Telitacicept for IgA Nephropathy — TELIGAN Phase 3 Trial"
   hidden: false
 source:

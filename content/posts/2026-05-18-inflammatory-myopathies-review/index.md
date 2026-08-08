@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A contemporary NEJM review of idiopathic inflammatory myopathies — the five-subtype framework (IBM, IMNM, antisynthetase syndrome, overlap, dermatomyositis), the autoantibody revolution that now anchors classification, and the shift toward subtype-specific therapy with biologics, JAK/TYK2 inhibitors, and CAR-T."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Inflammatory myopathies — five-subtype framework infographic"
   hidden: false
 source:

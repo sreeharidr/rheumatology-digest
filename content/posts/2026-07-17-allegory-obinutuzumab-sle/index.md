@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "ALLEGORY is a phase 3 RCT of the type II anti-CD20 antibody obinutuzumab added to standard therapy in active non-renal SLE. It met its primary endpoint (SRI-4 76.7% vs 53.5% at week 52) and all five key secondary endpoints, achieving both steroid-sparing and a ~40% reduction in flare hazard — reinforcing that depth of B-cell depletion matters and that type II succeeds where rituximab failed."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "ALLEGORY trial — obinutuzumab in active non-renal systemic lupus erythematosus"
   hidden: false
 source:

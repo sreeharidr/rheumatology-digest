@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 Personal View arguing that 'seronegative' usually describes the assay rather than the patient — and that separating genuinely seronegative disease (myeloid/CD8-driven, MHC class I-associated, rituximab-unresponsive) from merely undetected seropositivity is the field's necessary next step. Includes a disease-by-disease audit of seronegativity rates and why classification criteria naming the antibody but not the method matters."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "The erosion of seronegative autoimmune disease through the lens of autoantibodies"
   hidden: false
 source:

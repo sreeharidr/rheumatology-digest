@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "A population-based MRI study of 11,163 German adults found sacroiliac joint bone marrow oedema in about one in three people — roughly 50 times the prevalence of axial spondyloarthritis. The signal tracked with BMI, occupational loading, age and, in women, pregnancy, while chronic back pain barely moved the rate, providing the missing denominator for interpreting a positive SIJ MRI."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Prevalence and determinants of sacroiliac joint bone marrow oedema in the general population"
   hidden: false
 source:

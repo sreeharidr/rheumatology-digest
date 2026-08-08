@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 narrative review of T-cell engagers (TCEs) in autoimmune rheumatic disease — off-the-shelf bispecific antibodies that redirect a patient's own T cells against autoreactive B/plasma cells, pitched as a repeatable, dose-adjustable alternative to CAR-T. Early efficacy across SLE, SSc, RA, myositis and Sjögren's is real but preliminary, and the review's headline problem is under-dosing relative to oncology, which likely drives frequent relapse."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "T-cell engagers (bispecific antibodies) in rheumatology — mechanism, targets and dosing"
   hidden: false
 source:

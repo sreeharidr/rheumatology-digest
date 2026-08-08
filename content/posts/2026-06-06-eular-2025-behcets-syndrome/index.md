@@ -9,6 +9,7 @@ categories: ["guidelines"]
 summary: "The 2025 EULAR update to the Behçet's syndrome recommendations moves monoclonal TNF-alpha inhibitors (especially infliximab) to first-line induction and maintenance for eye, vascular and parenchymal-CNS disease, displacing cyclophosphamide and the azathioprine-first strategy, and broadens treatment targets to angiographic and endoscopic remission."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "EULAR 2025 Behçet's syndrome management recommendations overview"
   hidden: false
 source:

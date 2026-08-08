@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["fibromyalgia", "treatment", "diagnosis", "pain"]
 categories: ["reviews"]
 summary: "A 2026 NEJM Clinical Practice review reframing fibromyalgia as nociplastic pain — CNS sensitisation to painful and non-painful stimuli — so therapy aims to calm the CNS rather than repair peripheral tissue. Covers the positive (non-exclusion) diagnosis, the chronic overlapping pain conditions, and management where non-pharmacologic treatment outperforms drugs, amitriptyline at night leads the drugs, and opioids are harmful."
+description: "Fibromyalgia is nociplastic pain: calm the CNS, don't chase tissue damage. Non-drug therapy beats every drug, and opioids nearly double mortality."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Fibromyalgia as nociplastic pain — diagnosis and management"
   hidden: false
 source:

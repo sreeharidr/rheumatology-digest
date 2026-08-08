@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 practical review of morphea (localized scleroderma) across age groups — an organ-sparing autoimmune skin disease distinct from systemic sclerosis. Covers classification, the high-stakes subtypes (pansclerotic, facial linear), activity-vs-damage assessment, and management anchored on long-course methotrexate plus a steroid bridge, where depth and site dictate aggressiveness."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "A practical clinical approach to morphea (localized scleroderma)"
   hidden: false
 source:

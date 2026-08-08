@@ -9,6 +9,7 @@ categories: ["guidelines"]
 summary: "The 2025 EULAR update streamlines RA management to 5 overarching principles and 9 recommendations, abandons post-methotrexate prognostic risk stratification, and keeps JAK inhibitors co-equal with biologics after individual risk assessment."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "EULAR 2025 RA management recommendations overview"
   hidden: false
 source:

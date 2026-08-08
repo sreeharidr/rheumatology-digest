@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 review of steroid-sparing therapy across the GCA–PMR spectrum: glucocorticoids still induce remission but drive substantial cumulative toxicity, so the field has pivoted to IL-6 receptor inhibition (tocilizumab in GCA, sarilumab in PMR) and JAK inhibition (upadacitinib now approved for GCA) — none of which reliably restores treatment-free remission, against a backdrop of weak monitoring tools and GCA-specific vascular-damage risk."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Treatment strategies beyond glucocorticoids in giant cell arteritis and polymyalgia rheumatica"
   hidden: false
 source:

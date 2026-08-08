@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["general", "diagnosis", "ana", "liver-disease", "nafld"]
 categories: ["research"]
 summary: "In a 28,781-patient EMR phenome-wide study, a high ANA titer (≥1:640) without autoimmune disease was strongly enriched for non-AI liver disease (NAFLD/NASH, alcohol-related) and metabolic comorbidity — broadening the differential for an unexplained high-titer ANA beyond the usual autoimmune workup."
+description: "An unexplained ANA ≥1:640 was strongly linked to fatty liver and metabolic disease in 28,781 patients — the differential extends well beyond autoimmunity."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "High ANA titer in non-autoimmune individuals — infographic"
   hidden: false
 source:

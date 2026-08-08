@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 narrative review arguing that B cells are the single through-line of Sjögren disease — connecting autoantibodies, glandular pathology, the highest lymphoma risk of any autoimmune disease, and the emerging drug pipeline. Endotyping by B-cell activity may identify who develops lymphoma and who responds to B-cell-targeted therapy, as newer BAFF/APRIL, CD40L, BTK and FcRn agents succeed where rituximab failed."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "B cells in Sjögren disease — from autoimmunity to lymphomagenesis and B-cell-targeted therapies"
   hidden: false
 source:

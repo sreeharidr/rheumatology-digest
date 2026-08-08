@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "A combined individual-patient-data analysis of the NORD-STAR and BeSt trials shows that where early RA is distributed carries prognostic signal: hand-dominant disease (JIP-Hand) predicts better treatment response and polyarthritis (JIP-Poly) worse — independent of sex and serology, and equally across csDMARDs and bDMARDs, with ACPA/RF showing no association with short-term activity response."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Joint involvement pattern and treatment response in early rheumatoid arthritis"
   hidden: false
 source:

@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["myositis", "jak-inhibitors", "treatment", "safety"]
 categories: ["research"]
 summary: "The VALOR phase 3 trial shows that brepocitinib 30 mg daily — a selective TYK2–JAK1 inhibitor — significantly improves composite disease activity, skin involvement, and muscle strength while enabling steroid discontinuation in adults with treatment-refractory dermatomyositis, marking the first successful phase 3 RCT of an oral targeted agent in this disease."
+description: "First oral targeted agent to win a phase 3 in dermatomyositis — brepocitinib improved skin, muscle and disease activity, and enabled steroid withdrawal."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "VALOR trial: brepocitinib in dermatomyositis — TIS, skin, steroid-sparing outcomes"
   hidden: false
 source:

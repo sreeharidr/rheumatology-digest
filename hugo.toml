@@ -72,7 +72,7 @@ buildExpired = false
 [params]
   env = 'production'
   author = 'Dr. Sree Hari Reddy MD'
-  description = 'Educational rheumatology content for clinicians.'
+  description = 'Structured summaries of new rheumatology and translational immunology papers — study design, key numbers, limitations, and the original DOI.'
   defaultTheme = 'auto'
   hideAuthor = true
   mainSections = ['posts', 'cases']

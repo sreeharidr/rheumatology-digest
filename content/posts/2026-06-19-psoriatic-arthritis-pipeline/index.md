@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 review of the psoriatic arthritis pipeline, organised around two vectors — greater precision (dual IL-17A/F blockade, engineered molecular formats, selective oral TYK2 inhibition, oral IL-23R antagonism) and moving earlier to intercept the psoriasis-to-PsA transition — alongside metabolic and dual-targeted strategies."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "The psoriatic arthritis therapeutic pipeline — precision and earlier intervention"
   hidden: false
 source:

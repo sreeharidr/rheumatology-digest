@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["iga-nephropathy", "complement", "treatment", "glomerulonephritis", "iptacopan"]
 categories: ["research"]
 summary: "Final 24-month data from APPLAUSE-IgAN: the oral factor B inhibitor iptacopan roughly halved the rate of eGFR decline in high-risk IgA nephropathy (−3.10 vs −6.12 ml/min/1.73 m²/year) and cut hard kidney-failure events from 33.5% to 21.4%, converting an accelerated approval based on proteinuria into evidence on preserved kidney function — with serious infection the trade-off to manage."
+description: "Iptacopan halved eGFR decline in IgA nephropathy and cut kidney-failure events — but serious infections tripled, and few controls were on SGLT2 inhibitors."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "APPLAUSE-IgAN — iptacopan, an oral factor B inhibitor, in IgA nephropathy"
   hidden: false
 source:

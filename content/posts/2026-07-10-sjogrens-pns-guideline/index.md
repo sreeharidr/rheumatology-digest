@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sjogrens", "neuropathy", "treatment", "diagnosis", "rituximab"]
 categories: ["guidelines"]
 summary: "The 2026 Sjögren's Foundation clinical practice guideline for peripheral nervous system involvement in Sjögren's disease — an aligned neuro-rheumatology nomenclature, 31 evaluation good-practice statements, and 20 treatment recommendations (6 strong), covering mononeuropathies, polyneuropathies, and autonomic disease. Evidence is very low certainty, so most guidance rests on expert consensus."
+description: "Neuropathy often precedes Sjögren's diagnosis and occurs despite negative anti-SSA. Vasculitic neuropathy and ganglionopathy need immediate immunotherapy."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Clinical practice guideline for peripheral nervous system manifestations in Sjögren's disease"
   hidden: false
 source:

@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 clinical-pharmacology perspective arguing that biologic treatment failure in obesity is partly a pharmacokinetic problem: weight-driven clearance leaves many patients on fixed-dose subcutaneous biologics systematically underdosed, and dosing strategy should be matched to the weight–clearance relationship."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Matching biologic dosing strategy to body weight and clearance"
   hidden: false
 source:

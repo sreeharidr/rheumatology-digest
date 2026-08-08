@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "WILLOW Cohort A is the first placebo-controlled RCT of a TLR7/8 inhibitor in lupus: the oral agent enpatoran met its primary endpoint with a dose-dependent reduction in cutaneous disease activity (CLASI-A) at 16 weeks, and — the headline — rapidly and reversibly switched off the skin type I interferon signature, pinning TLR7/8 as an upstream driver of cutaneous IFN activation. Steroid-sparing was not demonstrated."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "WILLOW Cohort A — enpatoran, an oral TLR7/8 inhibitor, for cutaneous lupus"
   hidden: false
 source:

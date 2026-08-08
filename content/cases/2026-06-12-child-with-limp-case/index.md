@@ -6,7 +6,7 @@ slug: "child-with-limp-case"
 author: "Dr. Sree Hari Reddy MD"
 tags: ["scurvy", "vitamin-c-deficiency", "bone-pain", "diagnosis", "pediatrics", "case"]
 summary: "Work through a previously healthy 7-year-old girl with six weeks of progressive bilateral leg pain and a limp — one finding at a time. Twelve multiple-choice checkpoints test how you reshape a broad differential as imaging, labs and, crucially, a dietary history land on a diagnosis that is easy to miss."
-description: "Six weeks of leg pain and a limp in a well-grown child. Build the differential with the case team — one piece of evidence at a time — toward a diagnosis hiding in plain sight."
+description: "Six weeks of leg pain and a limp in a well-grown child: an interactive case that builds the differential one finding at a time."
 source:
   authors: "Savasta E, Fera AV, La Mendola S, Dominici S, Aschieri C, Robasto F, Licciardi F, Del Monte F, Fagioli F"
   title: "A 7-Year-Old Girl with Limping and Leg Pain"

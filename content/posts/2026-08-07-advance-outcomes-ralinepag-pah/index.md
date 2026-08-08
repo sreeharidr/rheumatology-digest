@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "ADVANCE OUTCOMES is a phase 3 trial of once-daily oral ralinepag, a prostacyclin IP receptor agonist, added to background therapy in pulmonary arterial hypertension. It cut first clinical worsening by 55% (HR 0.45) — but the effect was carried entirely by softer composite components, with death and hospitalisation unchanged, and 19% discontinued for adverse events. CTD-PAH made up 29% of the cohort as a prespecified stratum."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "ADVANCE OUTCOMES — ralinepag in pulmonary arterial hypertension"
   hidden: false
 source:

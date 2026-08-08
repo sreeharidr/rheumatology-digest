@@ -3,6 +3,15 @@
   includes this partial automatically if it exists.
 */ -}}
 
+{{- /* Build-time guard: Google truncates meta descriptions at ~155 chars.
+       Warns (does not fail) so an over-long description is caught in CI logs. */ -}}
+{{- with .Params.description }}
+  {{- $n := strings.RuneCount . }}
+  {{- if gt $n 155 }}
+    {{- warnf "meta description is %d chars (>155), will be truncated: %s" $n $.RelPermalink }}
+  {{- end }}
+{{- end }}
+
 {{- /* Analytics — GoatCounter. Production only, so local `hugo server` and
        draft previews don't pollute the stats. */ -}}
 {{- if eq hugo.Environment "production" -}}

@@ -9,6 +9,7 @@ categories: ["research"]
 summary: "A propensity-score analysis of the Lupus–Cruces–Bordeaux inception cohort: early (first-year) methylprednisolone pulses were associated with a ~40% reduction in long-term irreversible damage or death in active SLE, with benefit concentrated in moderate–severe disease — likely reflecting an MP-anchored low-steroid strategy rather than the molecule alone."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Early methylprednisolone pulses and long-term damage accrual in SLE"
   hidden: false
 source:

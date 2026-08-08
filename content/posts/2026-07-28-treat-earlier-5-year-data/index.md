@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["rheumatoid-arthritis", "treatment", "prevention", "methotrexate", "acpa"]
 categories: ["research"]
 summary: "Five-year data from the TREAT EARLIER trial show that a time-limited intervention (one glucocorticoid injection plus 12 months of methotrexate) in clinically suspect arthralgia produced durable benefit in ACPA-negative individuals at increased risk — RA in 9% vs 32%, NNT 4 — but nothing lasting in ACPA-positive individuals, splitting the at-risk phase into two diseases with two different answers."
+description: "ACPA status splits at-risk arthralgia in two: one year of methotrexate gave lasting benefit in ACPA-negative patients (NNT 4) and nothing in ACPA-positive."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "TREAT EARLIER 5-year data — methotrexate in ACPA-positive and ACPA-negative at-risk arthralgia"
   hidden: false
 source:

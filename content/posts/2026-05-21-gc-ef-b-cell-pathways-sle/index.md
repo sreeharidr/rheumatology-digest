@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "pathophysiology", "treatment", "car-t"]
 categories: ["reviews"]
 summary: "This 2026 Nature Reviews Rheumatology paper reframes SLE autoantibody production by contrasting the germinal-centre and extrafollicular B cell pathways — their distinct kinetics, affinity profiles, T cell dependence, and therapeutic vulnerabilities — showing that the inflammatory niche, not intrinsic autoreactivity, determines pathogenic B cell fate."
+description: "In lupus, the inflammatory niche — not intrinsic autoreactivity — decides B cell fate. Germinal-centre and extrafollicular routes need different drugs."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Germinal-centre and extrafollicular B cell pathways in SLE autoantibody production"
   hidden: false
 source:

@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 overview of drug- and vaccine-induced ANCA-associated vasculitis — clinically near-indistinguishable from idiopathic AAV, but with a recognisable serological fingerprint (dual MPO/PR3 positivity, elastase-ANCA, high IgM MPO-ANCA, low C4, neutropenia), a milder course, and one intervention no immunosuppressant can substitute for: stopping the drug. Antithyroid drugs, hydralazine and levamisole-adulterated cocaine dominate practice."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Drug- and vaccine-induced ANCA-associated vasculitis — triggers, serology and management"
   hidden: false
 source:

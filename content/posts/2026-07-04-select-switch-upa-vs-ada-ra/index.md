@@ -7,8 +7,10 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["rheumatoid-arthritis", "treatment", "jak-inhibitors", "upadacitinib", "tnf-inhibitors"]
 categories: ["research"]
 summary: "SELECT-SWITCH is the first double-blind RCT to test mechanism-of-action switching (to the JAK inhibitor upadacitinib) versus cycling to a second TNF inhibitor (adalimumab) after a first TNFi fails in RA. At 12 weeks, upadacitinib roughly doubled low-disease-activity rates and beat adalimumab on the primary endpoint and 4 of 5 ranked secondaries — though HAQ-DI function did not separate and safety was comparable."
+description: "After a first TNFi fails, switching to upadacitinib doubled low-disease-activity rates vs cycling to adalimumab — but physical function did not improve."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "SELECT-SWITCH — upadacitinib vs adalimumab after first TNFi failure in RA"
   hidden: false
 source:

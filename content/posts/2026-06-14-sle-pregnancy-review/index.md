@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 narrative review of fertility, pregnancy and lactation in SLE — the bidirectional disease–pregnancy relationship, the immunobiology of placental injury, and contemporary peri-conception, pregnancy and lactation care anchored to BSR, EULAR and ACR guidance, including a drug-by-drug safety framework."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Peri-conception, pregnancy and lactation care in systemic lupus erythematosus"
   hidden: false
 source:

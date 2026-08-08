@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 practical distillation of the 2023 ACR/CHEST guidelines on SSc-ILD — the single leading cause of death in systemic sclerosis. Covers proper screening (full PFTs + non-contrast HRCT), monitoring schedules, the first-line drug evidence (mycophenolate, tocilizumab, rituximab, nintedanib), and the strong recommendation against glucocorticoids."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Screening, monitoring and treatment of interstitial lung disease in systemic sclerosis"
   hidden: false
 source:

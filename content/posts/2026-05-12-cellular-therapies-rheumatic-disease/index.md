@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "CD19 CAR-T cellular therapy delivers drug-free remission in 80–85% of refractory SLE patients in early-phase trials, with similar signals in IIM and SSc — the first credible attempt at true immunological reset in autoimmune rheumatic disease."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Cellular therapies for rheumatic disease — infographic"
   hidden: false
 source:

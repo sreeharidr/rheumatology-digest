@@ -9,6 +9,7 @@ categories: ["reviews"]
 summary: "A 2026 review of renal involvement in systemic sclerosis — a spectrum well beyond scleroderma renal crisis (SRC), covering the diagnostic constellation, five converging mechanisms, risk factors (anti-RNA polymerase III, early dcSSc, steroids), and the management essentials: immediate ACE inhibition, never stopped for a rising creatinine."
 cover:
   image: "infographic.png"
+  relative: true
   alt: "Renal involvement in systemic sclerosis — spectrum, mechanisms and management"
   hidden: false
 source:
