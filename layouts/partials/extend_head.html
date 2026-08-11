@@ -297,6 +297,84 @@
 .case-mcq-rationale-body { font-size: 0.95rem; line-height: 1.6; }
 .case-mcq-rationale-body p:last-child { margin-bottom: 0; }
 
+/* === Mobile WhatsApp bar ========================================= */
+/* Slim, dismissible, appears after ~60% scroll. Desktop gets nothing here
+   (a QR block belongs inline instead — a channel link is useless on desktop). */
+.rd-wa-bar { display: none; }
+
+@media (max-width: 767px) {
+  .rd-wa-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: #F5F3EE;
+    border-top: 1px solid rgba(30, 58, 95, 0.15);
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(110%);
+    transition: transform 0.28s ease;
+  }
+  .rd-wa-bar.is-visible { transform: translateY(0); }
+
+  /* PaperMod themes via :root[data-theme="dark"] — NOT a .dark class.
+     defaultTheme is 'auto', so this attribute is what actually flips. */
+  :root[data-theme="dark"] .rd-wa-bar {
+    background: var(--entry);
+    border-top-color: var(--border);
+  }
+
+  .rd-wa-bar__icon { display: inline-flex; color: #25D366; flex-shrink: 0; }
+
+  .rd-wa-bar__text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.82rem;
+    line-height: 1.25;
+    font-weight: 600;
+    color: #1E3A5F;
+  }
+  :root[data-theme="dark"] .rd-wa-bar__text { color: var(--primary); }
+
+  .rd-wa-bar__cta {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #1E3A5F;
+    color: #fff !important;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none !important;
+    line-height: 1.2;
+  }
+  :root[data-theme="dark"] .rd-wa-bar__cta { background: #4a7fc1; }
+
+  .rd-wa-bar__close {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--secondary);
+    cursor: pointer;
+  }
+
+  /* Keep the bar from permanently covering the tail of the article. */
+  body.rd-wa-bar-active { padding-bottom: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-wa-bar { transition: none; }
+}
+
 /* === Home hero + section cards ================================== */
 :root { --rd-accent: #1E3A5F; }
 .dark { --rd-accent: #8fb3d9; }
