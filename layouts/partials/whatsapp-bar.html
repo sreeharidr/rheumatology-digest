@@ -1,10 +1,12 @@
 {{- /* Mobile-only sticky WhatsApp bar.
 
    Deliberately NOT a modal/interstitial: Google penalises intrusive
-   interstitials that cover content on mobile arrival from search, and search
-   visibility is the thing we're trying to improve. This is a slim, dismissible
-   bottom bar that appears only after ~60% scroll — i.e. only for readers who
-   actually got through the piece.
+   interstitials that COVER content on mobile arrival from search, and search
+   visibility is the thing we're trying to improve. A persistent bar is fine —
+   Google explicitly permits banners using "a reasonable amount of screen
+   space" that are easily dismissible. This one is ~57px (~7% of a phone
+   viewport), dismissible, and pads the body so it never occludes the article.
+   If it ever grows taller or becomes non-dismissible, that exemption lapses.
 
    - Shows only on single posts/cases — gated in JS on location.pathname, NOT in
      Hugo. PaperMod calls footer.html via `partialCached` keyed on .Layout/.Kind
@@ -47,41 +49,46 @@
   var bar = document.getElementById('rd-wa-bar');
   if (!bar || !window.matchMedia('(max-width: 767px)').matches) return;
 
-  var KEY = 'rd-wa-bar-dismissed';
-  try { if (localStorage.getItem(KEY)) return; } catch (e) {}
+  // Two-tier memory. Stores an expiry timestamp, not a flag, so the bar can
+  // come back later: a dismissal is "not now", a Follow click is "done".
+  var KEY = 'rd-wa-bar-until';
+  var DAY = 86400000;
+  var DISMISS_DAYS = 30;   // tapped the X
+  var FOLLOW_DAYS = 180;   // tapped Follow — assume they joined
 
-  var shown = false, last = 0;
-
-  function reveal() {
-    if (shown) return;
-    var scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollable <= 0) return;
-    if (window.scrollY / scrollable < 0.6) return;
-    shown = true;
-    bar.hidden = false;
-    // Force a reflow so the transform transition runs from its off-screen start.
-    // (Deliberately not requestAnimationFrame: rAF is throttled to zero in
-    // background/hidden tabs, which would leave the bar permanently hidden.)
-    void bar.offsetHeight;
-    bar.classList.add('is-visible');
-    document.body.classList.add('rd-wa-bar-active');
-    window.removeEventListener('scroll', onScroll);
+  function suppressedUntil() {
+    try { return parseInt(localStorage.getItem(KEY) || '0', 10) || 0; }
+    catch (e) { return 0; }
+  }
+  function suppressFor(days) {
+    try { localStorage.setItem(KEY, String(Date.now() + days * DAY)); }
+    catch (e) {}
   }
 
-  function onScroll() {
-    var now = Date.now();
-    if (now - last < 150) return;
-    last = now;
-    reveal();
-  }
+  if (suppressedUntil() > Date.now()) return;
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  document.getElementById('rd-wa-bar-close').addEventListener('click', function () {
+  function dismiss(days) {
+    suppressFor(days);
     bar.classList.remove('is-visible');
     document.body.classList.remove('rd-wa-bar-active');
     setTimeout(function () { bar.hidden = true; }, 250);
-    try { localStorage.setItem(KEY, '1'); } catch (e) {}
-  });
+  }
+
+  // Always shown, after a short beat so it reads as part of the page rather
+  // than a popup. Reflow (not requestAnimationFrame, which is throttled to
+  // zero in hidden tabs) forces the transition to run from off-screen.
+  setTimeout(function () {
+    bar.hidden = false;
+    void bar.offsetHeight;
+    bar.classList.add('is-visible');
+    document.body.classList.add('rd-wa-bar-active');
+  }, 800);
+
+  document.getElementById('rd-wa-bar-close')
+    .addEventListener('click', function () { dismiss(DISMISS_DAYS); });
+
+  // Link opens in a new tab, so hiding here leaves a clean page behind.
+  bar.querySelector('.rd-wa-bar__cta')
+    .addEventListener('click', function () { dismiss(FOLLOW_DAYS); });
 })();
 </script>
