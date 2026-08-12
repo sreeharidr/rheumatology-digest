@@ -19,8 +19,9 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 .
 ├── .github/workflows/hugo.yml      # Build + deploy on push to main
 ├── archetypes/
-│   ├── default.md                  # Default Hugo template
-│   └── posts.md                    # IMPORTANT — used by every `hugo new content posts/...`
+│   ├── default.md                  # Default Hugo template — only used for content outside posts/ and cases/
+│   ├── posts.md                    # IMPORTANT — used by every `hugo new content posts/...`
+│   └── cases.md                    # IMPORTANT — used by every `hugo new content cases/...`. Case schema: tags only (NO categories), no cover block, + a first gated section with a filled-in {{< case-mcq >}} skeleton.
 ├── content/
 │   ├── about.md                    # About & Disclaimer — educational/non-commercial framing, copyright statement, medical disclaimer, takedown contact. Linked from nav + every page footer.
 │   ├── archives.md                 # Stub for PaperMod's archives layout
@@ -72,6 +73,7 @@ Hard-won during the Aug 2026 work. Each of these looks like it works and then do
 - **Hugo's `len` on a string counts bytes, not characters.** Em-dashes are 3 bytes, so a 155-character description reports as ~158+. Use `strings.RuneCount` — the meta-description guard in `extend_head.html` does.
 - **`requestAnimationFrame` is throttled to zero in hidden/background tabs.** Don't gate anything user-visible on it — a forced reflow (`void el.offsetHeight`) achieves the same transition kick reliably.
 - **The dev server goes stale.** If CSS or a partial appears to vanish, kill and restart `hugo server` before debugging the code — this cost time twice. Always confirm against a real `hugo --gc --minify` build, which is the source of truth.
+- **In archetypes, `replace` cannot be piped into — use `replaceRE`.** Hugo's two string-substitution functions take their arguments in *opposite* orders: `replace INPUT OLD NEW` (input **first**) vs `replaceRE PATTERN REPLACEMENT INPUT` (input **last**). A Go-template pipe appends the piped value as the *last* argument, so `... | replace "-" " "` silently evaluates as `replace "-" " " <piped>` — it substitutes into the literal string `"-"` and returns `-`. This is why `archetypes/posts.md` emitted `title: "-"` on every post from launch until Aug 2026, while the `slug:` line beside it worked fine (it uses `replaceRE`). Fixed in both archetypes by switching the dash→space step to `replaceRE`. The failure is invisible unless you look at the generated title, because step 2 of the workflow overwrites it by hand anyway.
 
 ## Per-post workflow
 
@@ -129,13 +131,13 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 **Per case:**
 
-1. **Create the folder + scaffold:**
+1. **Create the folder + scaffold** (`archetypes/cases.md` fills in slug + title from the folder name, and lays down a first gated section with a `{{< case-mcq >}}` skeleton):
    ```sh
    hugo new content cases/YYYY-MM-DD-<topic-slug>/index.md
    ```
    Same date-gotcha as posts: keep the `date:` in the past relative to local clock time.
 
-2. **Edit front matter** — `title`, `summary` (SEO; Claude drafts), `description` (short page subtitle, optional), `tags`, `source` block (authors / journal / year / DOI). Set `slug:` explicitly. **Do NOT** set `categories:`.
+2. **Edit front matter** — `title` (real clinical title, e.g. "A 7-Year-Old Girl with a Limp and Leg Pain"), `summary` (SEO; Claude drafts), `description` (short page subtitle, optional), `tags`, `source` block (authors / journal / year / DOI). Leave `slug` alone — the archetype derives it from the folder name minus the date prefix. **Do NOT** set `categories:`, and **do not** add a `cover:` block — cases have no infographic.
 
 3. **Source PDF** lives in `~/Documents/NEJM Case Records/` (separate from the repo, like the posts archive). User provides the PDF; Claude reads it with the Read tool (poppler installed).
 
@@ -209,6 +211,7 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 ## Working with this user
 
+- **Keep this file current — update `CLAUDE.md` as part of every important task** (standing instruction, Aug 2026). Treat the doc update as part of the task, not a follow-up: if the task is not finished until the code works, it is not finished until the doc matches. What counts as important: anything that changes the workflow, the file layout, a convention, or the site's behaviour; any gotcha discovered the hard way (add it to "Theme & layout gotchas" with *why* it bit us, not just the fix); anything that closes or opens an item under "Open follow-ups". What does *not* count: routine content posts and cases — those follow the documented workflow and need no doc change. Edit the section that already owns the topic rather than appending a changelog; this file is a current-state reference, not a history.
 - **Code-aware but not a software engineer.** Comfortable with terminal, markdown, basic git. Treat unfamiliar tooling as new ground — explain what commands do, don't assume framework knowledge.
 - **One step at a time.** After each change: state a verification action (URL to open, command to run), wait for confirmation before proceeding. Flag destructive actions before running.
 - **Authentic voice is the point.** Clinical interpretation is the value of this site. Do NOT draft post commentary unless explicitly asked — the user writes their own summary, Claude provides scaffolding only (front matter, citation block, structural editing).
@@ -224,7 +227,10 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 Things flagged but not yet done — pick these up when relevant:
 
-1. **Backfill `description` on the remaining posts.** Aug 2026: the 10 highest-impression pages have short meta descriptions; the other ~26 still fall back to the long `summary` and truncate in Google. Add them as posts are revisited, or in a batch.
+1. **Backfill `description` on the remaining posts.** Aug 2026: the 10 highest-impression pages have short meta descriptions; the other **27 of 37** still fall back to the long `summary` and truncate in Google. Add them as posts are revisited, or in a batch. To list the ones still missing it:
+   ```sh
+   for f in content/posts/*/index.md; do grep -qE '^description: *"[^"]+"' "$f" || echo "$f"; done
+   ```
 2. **Desktop QR block — the next build.** The mobile bar is done, but **89% of traffic is desktop**, where a bare `whatsapp.com/channel/...` link is functionally dead (it demands a WhatsApp Web session or a phone handoff nobody performs mid-article). Needs an inline block after the TL;DR with a **static QR** (generate the SVG into `static/` or commit it — do *not* call an external QR API at page load), shown only on wide viewports via CSS. Style it as a quiet resource note, not a subscribe banner.
 3. **Remaining SEO items** (Aug 2026 Search Console review): **title tags** — 28 of 38 titles exceed 50 chars, so the `| Rheumatology Digest` suffix is truncated out of every SERP (fix by shortening titles — slugs are explicit, so retitling breaks no URLs); author byline + credentials on post pages for E-E-A-T (see the no-byline convention above — this is a *decision to revisit*, not a settled task; also needs the user's Google Scholar URL); citation/DOI block moved near the top of the post; `isBasedOn` in the Article schema (`schema_json.html` already emits a `Person` author, so enrich rather than duplicate).
 4. **Distribution is the real constraint, not CTR.** ~9 impressions/day means CTR fixes alone cannot move WhatsApp numbers — a realistic follower target needs roughly a **200× increase in impressions**, not a 3× in CTR. Key diagnosis: the content is **niche by construction** — a trial-acronym post can rank #1 worldwide and still get 30 impressions/month, whereas fibromyalgia (a clinical *question*) outperformed everything in a fraction of the time. So:
@@ -239,3 +245,4 @@ Things flagged but not yet done — pick these up when relevant:
 9. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
 10. **Remaining content sections** — quizzes (`content/quizzes/`) and learning modules (`content/modules/`) will be sibling sections to `content/posts/` and `content/cases/`, each with its own top-nav entry and layout. Different from the research/reviews split (a category WITHIN posts) — these are entirely separate content types. *Cases (`content/cases/`) launched May 2026 — see the "Per-case workflow" section above.*
 11. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
+12. **Hugo v0.158 deprecation warnings** — every build prints three. One is ours: `languageCode = 'en-us'` in `hugo.toml` should become `locale = 'en-us'`. The other two (`.Language.LanguageDirection`, `.Language.LanguageCode`) come from **PaperMod's own templates** — a submodule, so the fix is a theme update, not an edit. Don't rename our key in isolation without checking the RSS `<language>` tag still renders, since the theme still calls the deprecated accessors. Harmless until Hugo actually removes them.
