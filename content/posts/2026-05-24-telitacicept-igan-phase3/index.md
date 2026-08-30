@@ -1,5 +1,5 @@
 ---
-title: "Telitacicept for IgA Nephropathy — Interim Analysis of a Phase 3 Trial"
+title: "TELIGAN: Telitacicept in IgA Nephropathy"
 date: 2026-05-24T06:00:00+05:30
 draft: false
 slug: "telitacicept-igan-phase3"

@@ -1,5 +1,5 @@
 ---
-title: "Dosing Biologic Drugs in Obesity: One Size Does Not Fit All"
+title: "Dosing Biologics in Obesity"
 date: 2026-06-10T07:00:00+05:30
 draft: false
 slug: "dosing-biologics-obesity"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["treatment", "obesity", "pharmacokinetics", "tnf-inhibitors", "biologics"]
 categories: ["reviews"]
 summary: "A 2026 clinical-pharmacology perspective arguing that biologic treatment failure in obesity is partly a pharmacokinetic problem: weight-driven clearance leaves many patients on fixed-dose subcutaneous biologics systematically underdosed, and dosing strategy should be matched to the weight–clearance relationship."
+description: "Biologic failure in obesity is partly pharmacokinetic, not just inflammatory — fixed subcutaneous dosing systematically underdoses heavier patients."
 cover:
   image: "infographic.png"
   relative: true

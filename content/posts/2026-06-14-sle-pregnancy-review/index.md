@@ -1,5 +1,5 @@
 ---
-title: "Fertility, Pregnancy and Lactation in Women with SLE"
+title: "Pregnancy and Lactation in SLE"
 date: 2026-06-14T06:00:00+05:30
 draft: false
 slug: "sle-pregnancy-review"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "pregnancy", "treatment", "safety", "hydroxychloroquine"]
 categories: ["reviews"]
 summary: "A 2026 narrative review of fertility, pregnancy and lactation in SLE — the bidirectional disease–pregnancy relationship, the immunobiology of placental injury, and contemporary peri-conception, pregnancy and lactation care anchored to BSR, EULAR and ACR guidance, including a drug-by-drug safety framework."
+description: "Planning is the biggest lever, and the risk doesn't end at delivery — SLE pregnancy is a lifelong cardiometabolic flag, not a nine-month event."
 cover:
   image: "infographic.png"
   relative: true

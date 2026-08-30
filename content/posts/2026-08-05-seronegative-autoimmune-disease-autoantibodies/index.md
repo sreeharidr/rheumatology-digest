@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["autoantibodies", "diagnosis", "myositis", "scleroderma", "rheumatoid-arthritis"]
 categories: ["reviews"]
 summary: "A 2026 Personal View arguing that 'seronegative' usually describes the assay rather than the patient — and that separating genuinely seronegative disease (myeloid/CD8-driven, MHC class I-associated, rituximab-unresponsive) from merely undetected seropositivity is the field's necessary next step. Includes a disease-by-disease audit of seronegativity rates and why classification criteria naming the antibody but not the method matters."
+description: "Two opposite things hide under one word — an antibody the assay missed, or a disease antibodies never drove. Only one responds to B-cell depletion."
 cover:
   image: "infographic.png"
   relative: true

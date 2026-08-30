@@ -1,5 +1,5 @@
 ---
-title: "IL-5, Eosinophils, and IL-5 Pathway Inhibitors in EGPA"
+title: "IL-5 Pathway Inhibitors in EGPA"
 date: 2026-06-09T06:00:00+05:30
 draft: false
 slug: "il5-inhibitors-egpa"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["egpa", "vasculitis", "treatment", "pathophysiology", "mepolizumab", "benralizumab"]
 categories: ["reviews"]
 summary: "A 2026 narrative review of the IL-5/eosinophil axis in eosinophilic granulomatosis with polyangiitis (EGPA) and the two approved IL-5 pathway inhibitors — mepolizumab and benralizumab — covering their mechanisms, MIRRA and MANDARA trial evidence, real-world data, guideline positioning, and the remaining unmet needs."
+description: "Relapses cut by over 40% with major steroid-sparing — but the trials skew to the asthmatic phenotype, leaving the vasculitic compartment unproven."
 cover:
   image: "infographic.png"
   relative: true

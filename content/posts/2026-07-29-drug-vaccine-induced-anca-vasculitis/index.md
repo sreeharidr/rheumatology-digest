@@ -1,5 +1,5 @@
 ---
-title: "Drug- and Vaccine-Induced ANCA-Associated Vasculitis"
+title: "Drug- and Vaccine-Induced ANCA Vasculitis"
 date: 2026-07-29T15:00:00+05:30
 draft: false
 slug: "drug-vaccine-induced-anca-vasculitis"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["vasculitis", "anca", "diagnosis", "safety", "drug-induced"]
 categories: ["reviews"]
 summary: "A 2026 overview of drug- and vaccine-induced ANCA-associated vasculitis — clinically near-indistinguishable from idiopathic AAV, but with a recognisable serological fingerprint (dual MPO/PR3 positivity, elastase-ANCA, high IgM MPO-ANCA, low C4, neutropenia), a milder course, and one intervention no immunosuppressant can substitute for: stopping the drug. Antithyroid drugs, hydralazine and levamisole-adulterated cocaine dominate practice."
+description: "The serology gives it away, the course is milder, and stopping the drug is the single most effective intervention — maintenance is often unnecessary."
 cover:
   image: "infographic.png"
   relative: true

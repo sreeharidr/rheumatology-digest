@@ -1,5 +1,5 @@
 ---
-title: "Recombinant Zoster Vaccine in Inflammatory Rheumatic Disease — Efficacy, Long-Term Protection and Safety Under Immunosuppression"
+title: "Zoster Vaccine Under Immunosuppression"
 date: 2026-05-25T06:00:00+05:30
 draft: false
 slug: "rzv-immunosuppression-review"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["vaccination", "safety", "rheumatoid-arthritis", "sle"]
 categories: ["reviews"]
 summary: "A 2026 RMD Open narrative review of recombinant zoster vaccine (RZV) in inflammatory rheumatic disease — robust efficacy across IRD cohorts (~95% reduction in HZ recurrence; 54–70% effectiveness in SLE), no meaningful short-term flare signal in RCT data, and a practical drug-by-drug timing framework spanning csDMARDs, biologics, JAK inhibitors and B-cell depletion."
+description: "Protection is substantial and the flare signal isn't there — so the question has shifted from whether to vaccinate to how to make it actually happen."
 cover:
   image: "infographic.png"
   relative: true

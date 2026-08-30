@@ -1,5 +1,5 @@
 ---
-title: "A 76-Year-Old Woman with Rash and Rapidly Progressive Kidney Failure"
+title: "A 76-Year-Old Woman with Rash and Kidney Failure"
 date: 2026-05-18T22:00:00+05:30
 draft: false
 slug: "purpura-and-rpgn-case"

@@ -1,5 +1,5 @@
 ---
-title: "Guideline: Peripheral Nervous System Manifestations in Sjögren's Disease"
+title: "Guideline: Sjögren's Peripheral Neuropathy"
 date: 2026-07-10T05:00:00+05:30
 draft: false
 slug: "sjogrens-pns-guideline"

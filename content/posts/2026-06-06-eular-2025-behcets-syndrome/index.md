@@ -1,5 +1,5 @@
 ---
-title: "EULAR 2025 Recommendations for the Management of Behçet's Syndrome"
+title: "EULAR 2025: Behçet's Syndrome"
 date: 2026-06-06T13:00:00+01:00
 draft: false
 slug: "eular-2025-behcets-syndrome"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["behcets-syndrome", "vasculitis", "treatment", "tnf-inhibitors", "uveitis"]
 categories: ["guidelines"]
 summary: "The 2025 EULAR update to the Behçet's syndrome recommendations moves monoclonal TNF-alpha inhibitors (especially infliximab) to first-line induction and maintenance for eye, vascular and parenchymal-CNS disease, displacing cyclophosphamide and the azathioprine-first strategy, and broadens treatment targets to angiographic and endoscopic remission."
+description: "Infliximab moves to first line for eye, vascular and CNS disease, displacing cyclophosphamide and the azathioprine-first strategy."
 cover:
   image: "infographic.png"
   relative: true

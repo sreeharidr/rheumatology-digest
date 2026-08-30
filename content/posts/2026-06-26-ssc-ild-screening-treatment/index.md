@@ -1,5 +1,5 @@
 ---
-title: "Screening, Monitoring and Treatment of ILD in Systemic Sclerosis"
+title: "Screening and Treating ILD in Systemic Sclerosis"
 date: 2026-06-26T05:00:00+05:30
 draft: false
 slug: "ssc-ild-screening-treatment"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["scleroderma", "interstitial-lung-disease", "treatment", "diagnosis", "safety"]
 categories: ["reviews"]
 summary: "A 2026 practical distillation of the 2023 ACR/CHEST guidelines on SSc-ILD — the single leading cause of death in systemic sclerosis. Covers proper screening (full PFTs + non-contrast HRCT), monitoring schedules, the first-line drug evidence (mycophenolate, tocilizumab, rituximab, nintedanib), and the strong recommendation against glucocorticoids."
+description: "Office spirometry and a CTPA don't count as screening. Mycophenolate is the backbone, and steroids carry the strongest recommendation against."
 cover:
   image: "infographic.png"
   relative: true

@@ -1,5 +1,5 @@
 ---
-title: "APPLAUSE-IgAN: Iptacopan in IgA Nephropathy — 24-Month Data"
+title: "APPLAUSE-IgAN: Iptacopan at 24 Months"
 date: 2026-08-03T05:00:00+05:30
 draft: false
 slug: "applause-iptacopan-igan"

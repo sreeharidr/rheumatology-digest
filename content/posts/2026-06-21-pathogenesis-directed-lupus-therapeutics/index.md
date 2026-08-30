@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "treatment", "lupus-nephritis", "hydroxychloroquine", "pathophysiology"]
 categories: ["reviews"]
 summary: "A 2026 review of pathogenesis-directed SLE therapeutics anchored to the 2025 ACR SLE and 2024 ACR lupus nephritis guidelines — the FDA-approved and off-label drugs by mechanism, indication and monitoring, plus the metabolic/mitochondrial, IL-1, cardiometabolic and non-pharmacological strategies, mapped by organ manifestation."
+description: "Same drug list, deployed differently by organ and severity — and because infection is a leading cause of death, low-risk strategies get foregrounded."
 cover:
   image: "infographic.png"
   relative: true

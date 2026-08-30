@@ -1,5 +1,5 @@
 ---
-title: "TREAT EARLIER at 5 Years: Methotrexate in At-Risk Arthralgia"
+title: "TREAT EARLIER at 5 Years"
 date: 2026-07-28T05:00:00+05:30
 draft: false
 slug: "treat-earlier-5-year-data"

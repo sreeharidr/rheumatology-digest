@@ -1,5 +1,5 @@
 ---
-title: "Clinical conditions associated with a high ANA titer in non-autoimmune individuals"
+title: "High ANA Titre Without Autoimmune Disease"
 date: 2026-05-13T10:00:00+05:30
 draft: false
 slug: "high-ana-titer-non-autoimmune"

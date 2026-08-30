@@ -1,5 +1,5 @@
 ---
-title: "Joint Involvement Pattern Predicts Treatment Response in Early RA"
+title: "Joint Pattern Predicts Response in Early RA"
 date: 2026-07-01T05:00:00+05:30
 draft: false
 slug: "joint-pattern-ra-treatment-response"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["rheumatoid-arthritis", "treatment", "prognosis", "acpa", "methotrexate"]
 categories: ["research"]
 summary: "A combined individual-patient-data analysis of the NORD-STAR and BeSt trials shows that where early RA is distributed carries prognostic signal: hand-dominant disease (JIP-Hand) predicts better treatment response and polyarthritis (JIP-Poly) worse — independent of sex and serology, and equally across csDMARDs and bDMARDs, with ACPA/RF showing no association with short-term activity response."
+description: "Where the arthritis sits predicts response better than serology does — hand-dominant does well, polyarthritis badly, independent of ACPA and RF."
 cover:
   image: "infographic.png"
   relative: true

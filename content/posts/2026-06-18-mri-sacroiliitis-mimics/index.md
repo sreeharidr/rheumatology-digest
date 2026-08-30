@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["axial-spondyloarthritis", "imaging", "diagnosis", "sacroiliitis"]
 categories: ["reviews"]
 summary: "A 2026 pictorial review of the conditions that mimic sacroiliitis on SIJ MRI — bone marrow oedema is sensitive but the least specific sign, and overcalling it risks committing patients to lifelong biologic therapy. Erosion, lesion combinations, topographic location, semi-axial imaging and clinical context are the defences against false-positive reads."
+description: "Bone marrow oedema is the most sensitive and least specific sign — erosion discriminates. A false positive can commit someone to lifelong biologics."
 cover:
   image: "infographic.png"
   relative: true

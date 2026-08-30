@@ -1,5 +1,5 @@
 ---
-title: "A Phase 3 Trial of Brepocitinib in Dermatomyositis (VALOR Trial)"
+title: "VALOR: Brepocitinib in Dermatomyositis"
 date: 2026-05-20T06:00:00+05:30
 draft: false
 slug: "brepocitinib-dermatomyositis-valor"

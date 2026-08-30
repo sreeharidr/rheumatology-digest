@@ -56,7 +56,7 @@ function parseContent(file) {
   const scalar = k => { const r = fm.match(new RegExp(`^${k}:\\s*(?:"([^"]*)"|'([^']*)'|(.*?))\\s*$`, 'm')); return r ? (r[1] ?? r[2] ?? r[3] ?? '').trim() : null; };
   const list = k => { const r = fm.match(new RegExp(`^${k}:\\s*\\[(.*)\\]\\s*$`, 'm')); return r ? [...r[1].matchAll(/"([^"]*)"|'([^']*)'/g)].map(x => x[1] ?? x[2]) : (fm.match(new RegExp(`^${k}:\\s*$`, 'm')) ? [] : null); };
   return {
-    fm, body,
+    fm, body, rel: path.relative(ROOT, file),
     title: scalar('title'), date: scalar('date'), draft: scalar('draft'),
     slug: scalar('slug'), description: scalar('description'), summary: scalar('summary'),
     tags: list('tags'), categories: list('categories'),
@@ -72,6 +72,10 @@ const runes = s => [...(s || '')].length;
 // ------------------------------------------------------------ content check
 // Encodes the pre-push checklist from CLAUDE.md. Exit 1 on any FAIL.
 const VALID_CATEGORIES = ['research', 'reviews', 'guidelines'];
+// Site announcements are not clinical digest entries: no research/reviews/
+// guidelines category fits them and they have no infographic. Exempted by
+// name so this cannot become a loophole for a real post that forgot both.
+const ANNOUNCEMENT_POSTS = ['content/posts/welcome.md'];
 
 function checkOne(file) {
   const rel = path.relative(ROOT, file);
@@ -111,13 +115,15 @@ function checkOne(file) {
     if (tags.includes(reserved)) fail(rel, `"${reserved}" is a category, never a tag`);
   }
 
+  const isAnnouncement = ANNOUNCEMENT_POSTS.includes(rel);
+
   if (kind === 'post') {
     // 7. categories: exactly one of research/reviews/guidelines
-    if (!cats.length) fail(rel, 'categories is empty — must be research, reviews or guidelines');
+    if (!cats.length) { if (!isAnnouncement) fail(rel, 'categories is empty — must be research, reviews or guidelines'); }
     else for (const c of cats) if (!VALID_CATEGORIES.includes(c)) fail(rel, `category "${c}" is not one of ${VALID_CATEGORIES.join('/')}`);
 
     // 8. cover.relative — without it og:image 404s and every link preview breaks
-    if (!p.hasCoverBlock) fail(rel, 'no cover block — og:image will be missing');
+    if (!p.hasCoverBlock) { if (!isAnnouncement) fail(rel, 'no cover block — og:image will be missing'); }
     else if (!p.coverRelative) fail(rel, 'cover.relative: true is missing — og:image resolves to site root and 404s');
 
     // 9. the infographic must actually exist on disk
@@ -256,6 +262,8 @@ async function cmdSmoke() {
     const u = `/posts/${p.slug}/`;
     const r = await get(BASE + u, true);
     if (!r.ok) { fail('smoke', `${u} -> ${r.status}`); return; }
+    // Announcement posts legitimately have no infographic (see ANNOUNCEMENT_POSTS).
+    if (ANNOUNCEMENT_POSTS.includes(p.rel)) return;
     const og = (r.body.match(/<meta property="og:image" content="([^"]+)"/) || [])[1];
     if (!og) { fail('smoke', `${u} has no og:image`); ogFails++; return; }
     const img = await head(og.replace('https://rheumatologydigest.org', BASE));

@@ -1,5 +1,5 @@
 ---
-title: "Early Methylprednisolone Pulses and Long-Term Damage in Active SLE"
+title: "Early Methylprednisolone Pulses in Active SLE"
 date: 2026-06-28T05:00:00+05:30
 draft: false
 slug: "mp-pulses-sle-damage"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "treatment", "glucocorticoids", "methylprednisolone", "safety"]
 categories: ["research"]
 summary: "A propensity-score analysis of the Lupus–Cruces–Bordeaux inception cohort: early (first-year) methylprednisolone pulses were associated with a ~40% reduction in long-term irreversible damage or death in active SLE, with benefit concentrated in moderate–severe disease — likely reflecting an MP-anchored low-steroid strategy rather than the molecule alone."
+description: "~40% less long-term damage — but only in moderate-to-severe disease, and the active ingredient looks like the strategy rather than the molecule."
 cover:
   image: "infographic.png"
   relative: true

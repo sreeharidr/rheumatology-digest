@@ -1,5 +1,5 @@
 ---
-title: "Sacroiliac Bone Marrow Oedema in the General Population"
+title: "Sacroiliac Bone Marrow Oedema in Normal Adults"
 date: 2026-07-26T05:00:00+05:30
 draft: false
 slug: "sij-bone-marrow-oedema-general-population"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["axial-spondyloarthritis", "imaging", "diagnosis", "sacroiliitis", "artificial-intelligence"]
 categories: ["research"]
 summary: "A population-based MRI study of 11,163 German adults found sacroiliac joint bone marrow oedema in about one in three people — roughly 50 times the prevalence of axial spondyloarthritis. The signal tracked with BMI, occupational loading, age and, in women, pregnancy, while chronic back pain barely moved the rate, providing the missing denominator for interpreting a positive SIJ MRI."
+description: "One in three ordinary adults has it — roughly 50 times the prevalence of axSpA — so a positive SIJ MRI means little without pretest probability."
 cover:
   image: "infographic.png"
   relative: true

@@ -2,10 +2,11 @@
 title: "Welcome to Rheumatology Digest"
 date: 2026-05-11T09:00:00+05:30
 draft: false
+slug: "welcome-to-rheumatology-digest"
 author: "Dr. Sree Hari Reddy MD"
 tags: ["announcements"]
-categories: ["meta"]
 summary: "A new permanent home for Rheumatology Digest — daily clinical write-ups, cases, quizzes, and learning modules."
+description: "Rheumatology Digest now has a permanent, searchable home — daily clinical write-ups and interactive cases, archived beyond WhatsApp."
 ---
 
 Rheumatology Digest now has a permanent web home.

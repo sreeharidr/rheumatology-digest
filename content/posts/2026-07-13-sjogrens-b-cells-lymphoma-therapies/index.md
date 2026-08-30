@@ -1,5 +1,5 @@
 ---
-title: "Sjögren Disease — B Cells, Lymphomagenesis and Novel B-Cell Therapies"
+title: "Sjögren's: B Cells and Lymphoma Risk"
 date: 2026-07-13T05:00:00+05:30
 draft: false
 slug: "sjogrens-b-cells-lymphoma-therapies"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sjogrens", "lymphoma", "treatment", "pathophysiology", "b-cells"]
 categories: ["reviews"]
 summary: "A 2026 narrative review arguing that B cells are the single through-line of Sjögren disease — connecting autoantibodies, glandular pathology, the highest lymphoma risk of any autoimmune disease, and the emerging drug pipeline. Endotyping by B-cell activity may identify who develops lymphoma and who responds to B-cell-targeted therapy, as newer BAFF/APRIL, CD40L, BTK and FcRn agents succeed where rituximab failed."
+description: "B cells link the autoantibodies, the glandular damage and the highest lymphoma risk in autoimmunity — and newer agents succeed where rituximab failed."
 cover:
   image: "infographic.png"
   relative: true

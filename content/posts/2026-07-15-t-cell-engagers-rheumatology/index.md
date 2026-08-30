@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["treatment", "b-cells", "bispecific-antibodies", "car-t"]
 categories: ["reviews"]
 summary: "A 2026 narrative review of T-cell engagers (TCEs) in autoimmune rheumatic disease — off-the-shelf bispecific antibodies that redirect a patient's own T cells against autoreactive B/plasma cells, pitched as a repeatable, dose-adjustable alternative to CAR-T. Early efficacy across SLE, SSc, RA, myositis and Sjögren's is real but preliminary, and the review's headline problem is under-dosing relative to oncology, which likely drives frequent relapse."
+description: "Rheumatology has been under-dosing these next to oncology — incomplete tissue B-cell depletion likely explains the frequent relapses after treatment."
 cover:
   image: "infographic.png"
   relative: true

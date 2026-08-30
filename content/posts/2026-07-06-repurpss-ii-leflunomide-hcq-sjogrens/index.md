@@ -1,5 +1,5 @@
 ---
-title: "RepurpSS-II: Leflunomide + Hydroxychloroquine for Sjögren's Disease"
+title: "RepurpSS-II: Leflunomide + HCQ in Sjögren's"
 date: 2026-07-06T05:00:00+05:30
 draft: false
 slug: "repurpss-ii-leflunomide-hcq-sjogrens"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sjogrens", "treatment", "leflunomide", "hydroxychloroquine"]
 categories: ["research"]
 summary: "RepurpSS-II is a phase 2b, placebo-controlled RCT of leflunomide plus hydroxychloroquine in active systemic Sjögren's disease, given without any background immunomodulatory therapy. The combination met its primary endpoint — a clinically meaningful ESSDAI improvement (−4.14) at 24 weeks, replicating RepurpSS-I — but dryness and patient-reported symptoms (ESSPRI) did not separate from placebo."
+description: "Met its endpoint on disease activity with no background immunosuppression — but dryness and patient-reported symptoms didn't separate from placebo."
 cover:
   image: "infographic.png"
   relative: true

@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["scleroderma", "renal", "scleroderma-renal-crisis", "treatment", "pathophysiology"]
 categories: ["reviews"]
 summary: "A 2026 review of renal involvement in systemic sclerosis — a spectrum well beyond scleroderma renal crisis (SRC), covering the diagnostic constellation, five converging mechanisms, risk factors (anti-RNA polymerase III, early dcSSc, steroids), and the management essentials: immediate ACE inhibition, never stopped for a rising creatinine."
+description: "Start captopril before any confirmatory test and don't stop it for a rising creatinine — yet outcomes in renal crisis have plateaued since 2015."
 cover:
   image: "infographic.png"
   relative: true

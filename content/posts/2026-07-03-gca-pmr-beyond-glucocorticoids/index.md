@@ -1,5 +1,5 @@
 ---
-title: "Treatment Strategies in GCA and PMR: Beyond Glucocorticoids"
+title: "GCA and PMR Beyond Glucocorticoids"
 date: 2026-07-03T05:00:00+05:30
 draft: false
 slug: "gca-pmr-beyond-glucocorticoids"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["giant-cell-arteritis", "polymyalgia-rheumatica", "treatment", "glucocorticoids", "il-6-inhibitors"]
 categories: ["reviews"]
 summary: "A 2026 review of steroid-sparing therapy across the GCA–PMR spectrum: glucocorticoids still induce remission but drive substantial cumulative toxicity, so the field has pivoted to IL-6 receptor inhibition (tocilizumab in GCA, sarilumab in PMR) and JAK inhibition (upadacitinib now approved for GCA) — none of which reliably restores treatment-free remission, against a backdrop of weak monitoring tools and GCA-specific vascular-damage risk."
+description: "IL-6 and JAK inhibition roughly halve cumulative steroids — but none reliably delivers treatment-free remission, and monitoring remains weak."
 cover:
   image: "infographic.png"
   relative: true

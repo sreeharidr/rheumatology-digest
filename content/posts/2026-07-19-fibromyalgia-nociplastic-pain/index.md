@@ -1,5 +1,5 @@
 ---
-title: "Fibromyalgia as Nociplastic Pain (NEJM Clinical Practice)"
+title: "Fibromyalgia as Nociplastic Pain"
 date: 2026-07-19T05:00:00+05:30
 draft: false
 slug: "fibromyalgia-nociplastic-pain"

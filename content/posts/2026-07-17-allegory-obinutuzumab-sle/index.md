@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sle", "treatment", "obinutuzumab", "b-cells", "glucocorticoids"]
 categories: ["research"]
 summary: "ALLEGORY is a phase 3 RCT of the type II anti-CD20 antibody obinutuzumab added to standard therapy in active non-renal SLE. It met its primary endpoint (SRI-4 76.7% vs 53.5% at week 52) and all five key secondary endpoints, achieving both steroid-sparing and a ~40% reduction in flare hazard — reinforcing that depth of B-cell depletion matters and that type II succeeds where rituximab failed."
+description: "SRI-4 76.7% vs 53.5%, with real steroid-sparing — reinforcing that depth of B-cell depletion is what lupus needs, where rituximab fell short."
 cover:
   image: "infographic.png"
   relative: true

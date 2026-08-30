@@ -1,5 +1,5 @@
 ---
-title: "A Practical Clinical Approach to Morphea (Localized Scleroderma)"
+title: "A Practical Approach to Morphea"
 date: 2026-06-30T05:00:00+05:30
 draft: false
 slug: "morphea-diagnosis-management"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["morphea", "treatment", "diagnosis", "pediatrics", "methotrexate"]
 categories: ["reviews"]
 summary: "A 2026 practical review of morphea (localized scleroderma) across age groups — an organ-sparing autoimmune skin disease distinct from systemic sclerosis. Covers classification, the high-stakes subtypes (pansclerotic, facial linear), activity-vs-damage assessment, and management anchored on long-course methotrexate plus a steroid bridge, where depth and site dictate aggressiveness."
+description: "Depth and site dictate everything, and watchful waiting is the error — treatment delay is the strongest driver of irreversible damage."
 cover:
   image: "infographic.png"
   relative: true

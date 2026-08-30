@@ -1,5 +1,5 @@
 ---
-title: "What's Next in Psoriatic Arthritis Therapy? A Look at the Pipeline"
+title: "The Psoriatic Arthritis Pipeline"
 date: 2026-06-19T06:00:00+05:30
 draft: false
 slug: "psoriatic-arthritis-pipeline"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["psoriatic-arthritis", "treatment", "tyk2-inhibitors", "il-17-inhibitors", "pipeline"]
 categories: ["reviews"]
 summary: "A 2026 review of the psoriatic arthritis pipeline, organised around two vectors — greater precision (dual IL-17A/F blockade, engineered molecular formats, selective oral TYK2 inhibition, oral IL-23R antagonism) and moving earlier to intercept the psoriasis-to-PsA transition — alongside metabolic and dual-targeted strategies."
+description: "The near-term shift is oral and multidomain — dual IL-17A/F, TYK2, oral IL-23R. Intercepting the psoriasis-to-PsA transition remains unproven."
 cover:
   image: "infographic.png"
   relative: true

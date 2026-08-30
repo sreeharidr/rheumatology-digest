@@ -1,5 +1,5 @@
 ---
-title: "RHO: Efgartigimod in Sjögren's Disease (Phase 2 Proof-of-Concept)"
+title: "RHO: Efgartigimod in Sjögren's Disease"
 date: 2026-07-21T05:00:00+05:30
 draft: false
 slug: "rho-efgartigimod-sjogrens"
@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["sjogrens", "treatment", "efgartigimod", "fcrn", "autoantibodies"]
 categories: ["research"]
 summary: "RHO is a phase 2 proof-of-concept RCT of the FcRn antagonist efgartigimod in Sjögren's disease, testing whether removing pathogenic IgG autoantibodies improves disease. It met its exploratory objective (CRESS response 45.5% vs 11.1% at week 24) with deep, selective IgG reduction — but systemic activity improved while patient-reported symptoms did not, and the tiny sample means this justifies phase 3, not practice change."
+description: "Clearing IgG improved systemic activity but not symptoms — and with 31 patients, this justifies a phase 3 rather than any change in practice."
 cover:
   image: "infographic.png"
   relative: true

@@ -7,6 +7,7 @@ author: "Dr. Sree Hari Reddy MD"
 tags: ["myositis", "dermatomyositis", "inclusion-body-myositis", "autoantibodies", "diagnosis", "treatment", "interstitial-lung-disease"]
 categories: ["reviews"]
 summary: "A contemporary NEJM review of idiopathic inflammatory myopathies — the five-subtype framework (IBM, IMNM, antisynthetase syndrome, overlap, dermatomyositis), the autoantibody revolution that now anchors classification, and the shift toward subtype-specific therapy with biologics, JAK/TYK2 inhibitors, and CAR-T."
+description: "The task is no longer recognising myositis but subclassifying it — five subtypes, each with its own cancer risk, prognosis and targeted therapy."
 cover:
   image: "infographic.png"
   relative: true
