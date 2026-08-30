@@ -17,6 +17,10 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 
 ```
 .
+├── .claude/skills/
+│   └── run-rheumatology-digest/    # Skill: build/serve/screenshot/validate the site
+│       ├── SKILL.md                # Agent-facing man page (auto-loads on "run/build/screenshot the site")
+│       └── driver.mjs              # Zero-dep Node driver — see "Automated pre-push check"
 ├── .github/workflows/hugo.yml      # Build + deploy on push to main
 ├── archetypes/
 │   ├── default.md                  # Default Hugo template — only used for content outside posts/ and cases/
@@ -73,6 +77,8 @@ Hard-won during the Aug 2026 work. Each of these looks like it works and then do
 - **Hugo's `len` on a string counts bytes, not characters.** Em-dashes are 3 bytes, so a 155-character description reports as ~158+. Use `strings.RuneCount` — the meta-description guard in `extend_head.html` does.
 - **`requestAnimationFrame` is throttled to zero in hidden/background tabs.** Don't gate anything user-visible on it — a forced reflow (`void el.offsetHeight`) achieves the same transition kick reliably.
 - **The dev server goes stale.** If CSS or a partial appears to vanish, kill and restart `hugo server` before debugging the code — this cost time twice. Always confirm against a real `hugo --gc --minify` build, which is the source of truth.
+- **Case gating does not exist in Hugo's output — it is built by runtime JS.** `layouts/cases/single.html` emits bare `<h2>`s and its inline script wraps them into `<section class="case-section">` in the browser, locking all but the first with **`data-locked="true"`** (not the `hidden` attribute — probing `hasAttribute('hidden')` gives a confidently wrong answer). `curl` on a case page finds 6 mentions of `case-section` (the inline CSS/JS), not 13 sections. Any check of gating must use a real browser; `driver.mjs case` does it with `chrome --headless --dump-dom`.
+- **`grep -c` lies about Hugo's minified HTML.** Minified output is one long line and `grep -c` counts *lines*, so a page with 7 tables reports `1`. Count occurrences in Python instead. The same trap bit the reading-time check: `grep -oE '[0-9]+ min' | head -1` matched a stray `2` on a 17-minute post.
 - **In archetypes, `replace` cannot be piped into — use `replaceRE`.** Hugo's two string-substitution functions take their arguments in *opposite* orders: `replace INPUT OLD NEW` (input **first**) vs `replaceRE PATTERN REPLACEMENT INPUT` (input **last**). A Go-template pipe appends the piped value as the *last* argument, so `... | replace "-" " "` silently evaluates as `replace "-" " " <piped>` — it substitutes into the literal string `"-"` and returns `-`. This is why `archetypes/posts.md` emitted `title: "-"` on every post from launch until Aug 2026, while the `slug:` line beside it worked fine (it uses `replaceRE`). Fixed in both archetypes by switching the dash→space step to `replaceRE`. The failure is invisible unless you look at the generated title, because step 2 of the workflow overwrites it by hand anyway.
 
 ## Per-post workflow
@@ -105,7 +111,11 @@ User's existing offline workflow: select published paper → make a portrait HTM
 
 5. **Preview locally** at http://localhost:1313/posts/<slug>/. When ready, set `draft: false`.
 
-6. **Pre-push checklist — verify these before committing:**
+6. **Pre-push checklist — now automated. Run this instead of checking by hand:**
+   ```sh
+   node .claude/skills/run-rheumatology-digest/driver.mjs all
+   ```
+   Exit 0 means safe to push (~9s). It gates changed content against every rule below, runs `hugo --gc --minify`, confirms every page serves with a **resolving `og:image`** (i.e. the infographic is actually in the bundle), and asserts case MCQ gating still works. `driver.mjs check <slug>` checks one post without a server. See `.claude/skills/run-rheumatology-digest/SKILL.md`. The rules it enforces, and why each one matters:
    - `draft: false` is set. Hugo silently excludes `draft: true` posts from production builds — the page 404s with no build error. This has burned us before.
    - The body is not empty. There must be actual content between the TL;DR blockquote and `{{< source >}}`. If the user says "done, push it", read the file first and confirm body content exists before proceeding. If the body is empty, ask the user to paste their summary rather than pushing an empty post.
    - **`description` is set and ≤155 characters.** Without it the meta description silently falls back to the long `summary`, which Google truncates mid-sentence. `hugo --gc --minify` prints a `WARN meta description is N chars` line if any page is over — check the build output is clean.
@@ -178,9 +188,11 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 8. **Hugo dev-server gotcha:** when you change a shortcode or layout file, Hugo's Fast Render Mode can serve a stale render. If something looks broken (CSS missing, partial empty), kill the server and restart with `--disableFastRender`, or just restart it cleanly.
 
-9. **Pre-push checklist — verify these before committing:**
-   - `draft: false` is set. Same gotcha as posts — `draft: true` silently excludes the page from production.
-   - The body contains at least one `## ` section and one `{{< case-mcq >}}` shortcode. If the file is only front matter + `{{< source >}}`, it is not ready to push.
+9. **Pre-push checklist — automated, same driver as posts:**
+   ```sh
+   node .claude/skills/run-rheumatology-digest/driver.mjs all
+   ```
+   For cases it additionally enforces: `draft: false`; at least one `## ` section and one `{{< case-mcq >}}` shortcode; **no `categories:`**; and — via headless Chrome — that the runtime gating still locks every section but the first. That last check cannot be done against Hugo's output; see the gotcha below.
 
 10. **Commit + push:**
     ```sh
@@ -226,6 +238,8 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 - **`gh` CLI** is installed and authenticated as `sreeharidr` with a credential helper for git over HTTPS. Future `git push` operations don't prompt for credentials.
 - **`poppler`** is installed (for `pdftotext` / PDF reading via Read tool — needed when reading source PDFs from the archive folder).
 - **Hugo extended** is installed via Homebrew (matches the version pinned in CI).
+- **`driver.mjs`** (`.claude/skills/run-rheumatology-digest/`) — zero-dependency Node harness, the way to build/serve/screenshot/validate the site. Subcommands: `all` (pre-push gate), `check <slug|--staged>`, `audit`, `build`, `serve`/`stop`, `smoke`, `case`, `shot`. Needs Node ≥18; `shot` and `case` need Google Chrome and degrade to a warning without it. Registered as a skill, so it auto-loads on "run/build/screenshot/verify the site".
+- **`audit` is deliberately never green** — 28 posts predate the `description` convention and 28 titles exceed 50 chars (open follow-ups 1 and 3). Use it to measure that backlog; use `all` / `check --staged` as the actual gate.
 
 ## Open follow-ups
 
@@ -249,4 +263,5 @@ Things flagged but not yet done — pick these up when relevant:
 9. **Brand theming** — colors (navy `#1E3A5F`, off-white `#F5F3EE`), Inter font, flat SVG iconography. Step 7 of the original roadmap.
 10. **Remaining content sections** — quizzes (`content/quizzes/`) and learning modules (`content/modules/`) will be sibling sections to `content/posts/` and `content/cases/`, each with its own top-nav entry and layout. Different from the research/reviews split (a category WITHIN posts) — these are entirely separate content types. *Cases (`content/cases/`) launched May 2026 — see the "Per-case workflow" section above.*
 11. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
-12. **Hugo v0.158 deprecation warnings** — every build prints three. One is ours: `languageCode = 'en-us'` in `hugo.toml` should become `locale = 'en-us'`. The other two (`.Language.LanguageDirection`, `.Language.LanguageCode`) come from **PaperMod's own templates** — a submodule, so the fix is a theme update, not an edit. Don't rename our key in isolation without checking the RSS `<language>` tag still renders, since the theme still calls the deprecated accessors. Harmless until Hugo actually removes them.
+12. **`content/posts/welcome.md` — two legacy defects** (found by `driver.mjs audit`, Aug 2026). It has **no `slug`**, so Hugo falls back to a title-derived URL (`/posts/welcome-to-rheumatology-digest/`) — retitling it would silently break that URL. And it sets **`categories: ["meta"]`**, which creates a live, sitemap-indexed `/categories/meta/` page that appears in no nav and sits outside the research/reviews/guidelines scheme. Fix by adding an explicit `slug:` and either retiring the post or moving it to a real category. Low urgency; it is the only content file that fails these rules.
+13. **Hugo v0.158 deprecation warnings** — every build prints three. One is ours: `languageCode = 'en-us'` in `hugo.toml` should become `locale = 'en-us'`. The other two (`.Language.LanguageDirection`, `.Language.LanguageCode`) come from **PaperMod's own templates** — a submodule, so the fix is a theme update, not an edit. Don't rename our key in isolation without checking the RSS `<language>` tag still renders, since the theme still calls the deprecated accessors. Harmless until Hugo actually removes them.
