@@ -5,7 +5,7 @@ draft: false
 slug: "welcome-to-rheumatology-digest"
 author: "Dr. Sree Hari Reddy MD"
 tags: ["announcements"]
-summary: "A new permanent home for Rheumatology Digest — daily clinical write-ups, cases, quizzes, and learning modules."
+summary: "A new permanent home for Rheumatology Digest — daily clinical write-ups and interactive case-based learning, archived and searchable."
 description: "Rheumatology Digest now has a permanent, searchable home — daily clinical write-ups and interactive cases, archived beyond WhatsApp."
 ---
 
@@ -16,12 +16,6 @@ For years, this content has lived on WhatsApp — short clinical write-ups, info
 ## What you'll find here
 
 - **Daily digest entries** — concise clinical write-ups on rheumatology topics
-- **Cases** — case-based learning with discussion of reasoning and management
-- **Quizzes** — quick self-assessment on common and uncommon scenarios
-- **Modules** — structured, multi-part learning on focused topics
-
-## A note on the build
-
-This is the first post on the new site, published while the platform is still being set up. Expect rapid changes to layout, navigation, and styling over the coming weeks as the design settles in.
+- **Interactive cases** — work through a real clinical scenario one finding at a time, with a multiple-choice checkpoint at each step
 
 — Dr. Sree Hari Reddy MD
