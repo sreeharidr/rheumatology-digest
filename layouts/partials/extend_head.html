@@ -297,6 +297,65 @@
 .case-mcq-rationale-body { font-size: 0.95rem; line-height: 1.6; }
 .case-mcq-rationale-body p:last-child { margin-bottom: 0; }
 
+/* === Desktop WhatsApp QR block =================================== */
+/* Complement to the mobile bar: shown only >=768px, where a channel LINK is
+   useless (needs a WhatsApp Web session) but a QR works. Deliberately styled
+   as a quiet resource note, not a subscribe banner — it sits inside the
+   article after the TL;DR, so it must read as part of the page furniture.
+   The two never overlap: bar is <=767px, this is >=768px. */
+.rd-wa-qr { display: none; }
+
+@media (min-width: 768px) {
+  .rd-wa-qr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.75rem 0;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--entry);
+  }
+
+  /* The code keeps its own white ground in every theme — a QR inverted by
+     dark mode will not scan. The SVG carries its own white rect; this just
+     frames it so it does not look like a hole punched in a dark card. */
+  .rd-wa-qr__code {
+    flex: 0 0 auto;
+    display: block;
+    /* Explicit square, border-box, so the white frame holds its shape
+       regardless of how the QR inside renders. Sized as 116px code + 2x6px
+       quiet-zone padding. */
+    width: 128px;
+    height: 128px;
+    padding: 6px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 6px;
+    line-height: 0;
+  }
+  .rd-wa-qr__code svg { display: block; width: 100%; height: 100%; }
+
+  .rd-wa-qr__body { min-width: 0; }
+
+  .rd-wa-qr__title {
+    margin: 0 0 0.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--primary);
+  }
+
+  .rd-wa-qr__text {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--secondary);
+  }
+  .rd-wa-qr__text a { color: var(--secondary); text-decoration: underline; }
+  .rd-wa-qr__text a:hover { color: var(--primary); }
+}
+
 /* === Mobile WhatsApp bar ========================================= */
 /* Slim, dismissible, appears after ~60% scroll. Desktop gets nothing here
    (a QR block belongs inline instead — a channel link is useless on desktop). */

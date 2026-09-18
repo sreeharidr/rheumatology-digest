@@ -1,0 +1,67 @@
+{{- /* Desktop-only WhatsApp channel QR block.
+
+   Why this exists: ~89% of traffic is desktop, where a bare
+   whatsapp.com/channel/... link is functionally dead — it demands an existing
+   WhatsApp Web session or a phone handoff nobody performs mid-article. A QR
+   is the only handoff that works from a desktop screen. The mobile bar
+   (whatsapp-bar.html) covers <=767px; this covers >=768px. They never both show.
+
+   - Posts only — gated in JS on location.pathname, NOT in Hugo. PaperMod calls
+     footer.html via `partialCached` keyed on .Layout/.Kind only, so every
+     kind=page page shares ONE cached footer render and a Hugo-side page
+     condition here would silently bake in whichever page rendered first. Same
+     trap documented on whatsapp-bar.html. Do not "fix" it with `{{ if .Type }}`.
+   - Cases are deliberately excluded: they have no TL;DR blockquote to anchor
+     to, and their sections are JS-gated, so injecting a block mid-page risks
+     interfering with the reveal logic.
+   - Rendered in the footer and MOVED into the article by JS, so published
+     posts need no edits — the archive stays untouched.
+   - Visibility is pure CSS (styles live in extend_head.html with the rest of
+     the site CSS). JS only relocates the node, so a desktop<->mobile resize
+     resolves correctly instead of leaving the block stranded.
+   - The QR is a committed static file (static/whatsapp-qr.svg), generated
+     offline with qrencode. Never call an external QR API at page load: it
+     leaks every reader's page view to a third party and breaks the block the
+     day that service disappears.
+*/ -}}
+<aside id="rd-wa-qr" class="rd-wa-qr" hidden>
+  <a class="rd-wa-qr__code"
+     href="https://whatsapp.com/channel/0029Vb6PwSb9Bb61AIvZUK28"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Open the Rheumatology Digest WhatsApp channel">
+    {{/* Inlined at build time, NOT <img src>. An `absURL` src bakes in the
+         production baseURL, so any local preview of built output requests the
+         live domain and shows a broken image. Inlining also means no extra
+         request and no broken-image state if the asset ever goes missing. */}}
+    {{ readFile "static/whatsapp-qr.svg" | safeHTML }}
+  </a>
+  <div class="rd-wa-qr__body">
+    <p class="rd-wa-qr__title">Also on WhatsApp</p>
+    <p class="rd-wa-qr__text">
+      Every summary is posted to the Rheumatology Digest channel. Scan the code
+      with your phone to follow, or
+      <a href="https://whatsapp.com/channel/0029Vb6PwSb9Bb61AIvZUK28"
+         target="_blank" rel="noopener noreferrer">open the channel</a>.
+    </p>
+  </div>
+</aside>
+
+<script>
+(function () {
+  // Posts only. Gated here rather than in Hugo — see note above.
+  if (!/^\/posts\/.+/.test(location.pathname)) return;
+
+  var block = document.getElementById('rd-wa-qr');
+  var content = document.querySelector('.post-content');
+  if (!block || !content) return;
+
+  // Anchor after the TL;DR blockquote; fall back to the first paragraph for
+  // the handful of posts that have no TL;DR (e.g. the site announcement).
+  var anchor = content.querySelector('blockquote') || content.querySelector('p');
+  if (!anchor) return;
+
+  // Inserting a node already in the DOM moves it — no clone, no duplicate.
+  anchor.insertAdjacentElement('afterend', block);
+  block.hidden = false;
+})();
+</script>
