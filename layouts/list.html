@@ -1,6 +1,7 @@
 {{- /* Project override of PaperMod's list.html.
-       Single change vs upstream: inserts an "Interactive case" eyebrow badge
-       above the entry title when the entry's Type is `cases`. Keeps section
+       Single change vs upstream: inserts an eyebrow badge above the entry title
+       — "Interactive case" when the entry's Type is `cases`, "Video" when it is
+       `videos`. Keeps section
        URLs (/posts/, /cases/) strict to their content type, while the homepage
        (which now pulls from both via site.Params.mainSections) gets the badge
        to distinguish interactive cases from daily posts at a glance.
@@ -84,6 +85,14 @@
         <polyline points="10 8 14 12 10 16"/>
       </svg>
       Interactive case
+    </span>
+    {{- end }}
+    {{- if eq .Type "videos" }}
+    <span class="entry-type-badge entry-type-badge--video" aria-label="Video">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      Video
     </span>
     {{- end }}
     <h2 class="entry-hint-parent">

@@ -14,6 +14,7 @@ buildExpired = false
 [permalinks]
   posts = '/posts/:slug/'
   cases = '/cases/:slug/'
+  videos = '/videos/:slug/'
 
 [taxonomies]
   tag = 'tags'
@@ -49,6 +50,11 @@ buildExpired = false
     url = '/cases/'
     weight = 18
   [[menu.main]]
+    identifier = 'videos'
+    name = 'Videos'
+    url = '/videos/'
+    weight = 19
+  [[menu.main]]
     identifier = 'tags'
     name = 'Tags'
     url = '/tags/'
@@ -75,7 +81,7 @@ buildExpired = false
   description = 'Structured summaries of new rheumatology and translational immunology papers — study design, key numbers, limitations, and the original DOI.'
   defaultTheme = 'auto'
   hideAuthor = true
-  mainSections = ['posts', 'cases']
+  mainSections = ['posts', 'cases', 'videos']
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true

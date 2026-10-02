@@ -64,6 +64,7 @@ function parseContent(file) {
     coverRelative: /^\s+relative:\s*true\s*$/m.test(fm),
     coverImage: (fm.match(/^\s+image:\s*"([^"]*)"/m) || [])[1] || null,
     doi: (fm.match(/^\s+doi:\s*"([^"]*)"/m) || [])[1] || null,
+    videoId: (fm.match(/^video:\s*\n(?:[ \t]+.*\n)*?[ \t]+id:\s*"([^"]*)"/m) || [])[1] || null,
   };
 }
 
@@ -79,7 +80,8 @@ const ANNOUNCEMENT_POSTS = ['content/posts/welcome.md'];
 
 function checkOne(file) {
   const rel = path.relative(ROOT, file);
-  const kind = rel.includes(`${path.sep}cases${path.sep}`) ? 'case' : 'post';
+  const kind = rel.includes(`${path.sep}cases${path.sep}`) ? 'case'
+             : rel.includes(`${path.sep}videos${path.sep}`) ? 'video' : 'post';
   const dir = path.dirname(file);
   const at = (msg) => `${rel}: ${msg}`;
   const p = parseContent(file);
@@ -121,16 +123,26 @@ function checkOne(file) {
     // 7. categories: exactly one of research/reviews/guidelines
     if (!cats.length) { if (!isAnnouncement) fail(rel, 'categories is empty — must be research, reviews or guidelines'); }
     else for (const c of cats) if (!VALID_CATEGORIES.includes(c)) fail(rel, `category "${c}" is not one of ${VALID_CATEGORIES.join('/')}`);
+  }
 
+  if (kind === 'post' || kind === 'video') {
     // 8. cover.relative — without it og:image 404s and every link preview breaks
     if (!p.hasCoverBlock) { if (!isAnnouncement) fail(rel, 'no cover block — og:image will be missing'); }
     else if (!p.coverRelative) fail(rel, 'cover.relative: true is missing — og:image resolves to site root and 404s');
 
-    // 9. the infographic must actually exist on disk
+    // 9. the infographic (posts) / thumbnail (videos) must actually exist on disk
     if (p.coverImage) {
       if (!fs.existsSync(path.join(dir, p.coverImage))) fail(rel, `cover image "${p.coverImage}" not found in the bundle — link previews will break`);
     }
-  } else {
+  }
+
+  if (kind === 'video') {
+    // videos: tags only, a real YouTube id, and the player shortcode
+    if (cats.length) fail(rel, 'videos must NOT set categories (research/reviews is a posts-only split)');
+    if (!p.videoId || !/^[A-Za-z0-9_-]{11}$/.test(p.videoId)) fail(rel, `video.id "${p.videoId || ''}" is not an 11-character YouTube id`);
+    if (!/\{\{<\s*video\s*>\}\}/.test(p.body)) fail(rel, 'no {{< video >}} shortcode — the page has no player');
+    if (!/^##\s+/m.test(p.body)) warn(rel, 'no "## " headings — the table of contents will be empty');
+  } else if (kind === 'case') {
     // cases: tags only, no categories, no cover
     if (cats.length) fail(rel, 'cases must NOT set categories (research/reviews is a posts-only split)');
     if (p.hasCoverBlock) warn(rel, 'cases have no infographic — a cover block is unexpected');
@@ -144,7 +156,7 @@ function checkOne(file) {
 }
 
 function collectContent(target) {
-  const roots = [path.join(ROOT, 'content/posts'), path.join(ROOT, 'content/cases')];
+  const roots = [path.join(ROOT, 'content/posts'), path.join(ROOT, 'content/cases'), path.join(ROOT, 'content/videos')];
   let files = [];
   for (const r of roots) {
     if (!fs.existsSync(r)) continue;
@@ -247,7 +259,8 @@ async function cmdSmoke() {
   const all = collectContent();
   const posts = all.filter(f => f.includes(`${path.sep}posts${path.sep}`));
   const cases = all.filter(f => f.includes(`${path.sep}cases${path.sep}`));
-  const urls = ['/', '/posts/', '/cases/', '/about/', '/archives/', '/search/', '/index.json',
+  const videos = all.filter(f => f.includes(`${path.sep}videos${path.sep}`));
+  const urls = ['/', '/posts/', '/cases/', '/videos/', '/about/', '/archives/', '/search/', '/index.json',
                 '/categories/research/', '/categories/reviews/', '/categories/guidelines/', '/tags/'];
   await mapLimit(urls, 8, async u => {
     const r = await get(BASE + u);
@@ -270,6 +283,19 @@ async function cmdSmoke() {
     if (!img || !img.ok) { fail('smoke', `${u} og:image does not resolve: ${og}`); ogFails++; }
   });
   ok(`${live.length - ogFails} post pages served with a resolving og:image${ogFails ? ` (${ogFails} bad)` : ''}`);
+
+  // Video pages: same og:image rule as posts (the thumbnail is the link-preview image).
+  const liveVideos = videos.map(parseContent).filter(p => !p.error && p.draft === 'false' && p.slug);
+  await mapLimit(liveVideos, 4, async p => {
+    const u = `/videos/${p.slug}/`;
+    const r = await get(BASE + u, true);
+    if (!r.ok) { fail('smoke', `${u} -> ${r.status}`); return; }
+    const og = (r.body.match(/<meta property="og:image" content="([^"]+)"/) || [])[1];
+    if (!og) { fail('smoke', `${u} has no og:image`); return; }
+    const img = await head(og.replace('https://rheumatologydigest.org', BASE));
+    if (!img || !img.ok) fail('smoke', `${u} og:image does not resolve: ${og}`);
+    else ok(`${u} -> 200, og:image resolves`);
+  });
 
   const liveCases = cases.map(parseContent).filter(p => !p.error && p.draft === 'false' && p.slug);
   await mapLimit(liveCases, 4, async p => {

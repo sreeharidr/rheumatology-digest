@@ -48,8 +48,8 @@
 
 <script>
 (function () {
-  // Posts only. Gated here rather than in Hugo — see note above.
-  if (!/^\/posts\/.+/.test(location.pathname)) return;
+  // Posts and videos only. Gated here rather than in Hugo — see note above.
+  if (!/^\/(posts|videos)\/.+/.test(location.pathname)) return;
 
   var block = document.getElementById('rd-wa-qr');
   var content = document.querySelector('.post-content');

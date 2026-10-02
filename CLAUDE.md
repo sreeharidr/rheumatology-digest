@@ -23,9 +23,10 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 │       └── driver.mjs              # Zero-dep Node driver — see "Automated pre-push check"
 ├── .github/workflows/hugo.yml      # Build + deploy on push to main
 ├── archetypes/
-│   ├── default.md                  # Default Hugo template — only used for content outside posts/ and cases/
+│   ├── default.md                  # Default Hugo template — only used for content outside posts/, cases/ and videos/
 │   ├── posts.md                    # IMPORTANT — used by every `hugo new content posts/...`
-│   └── cases.md                    # IMPORTANT — used by every `hugo new content cases/...`. Case schema: tags only (NO categories), no cover block, + a first gated section with a filled-in {{< case-mcq >}} skeleton.
+│   ├── cases.md                    # IMPORTANT — used by every `hugo new content cases/...`. Case schema: tags only (NO categories), no cover block, + a first gated section with a filled-in {{< case-mcq >}} skeleton.
+│   └── videos.md                   # IMPORTANT — used by every `hugo new content videos/...`. Video schema: tags only (NO categories), cover = thumbnail.jpg (hidden on the page, used for og:image), a `video:` block (id/series/episode/seconds/uploaded), and a `{{< video >}}` + TL;DR skeleton.
 ├── content/
 │   ├── about.md                    # About & Disclaimer — educational/non-commercial framing, copyright statement, medical disclaimer, takedown contact. Linked from nav + every page footer.
 │   ├── archives.md                 # Stub for PaperMod's archives layout
@@ -35,22 +36,29 @@ A Hugo + PaperMod static site by Dr. Sree Hari Reddy MD (consultant rheumatologi
 │   │   └── YYYY-MM-DD-<slug>/      # Date-prefixed convention for new posts
 │   │       ├── index.md
 │   │       └── infographic.png
-│   └── cases/                      # Interactive case-based learning (page bundles)
+│   ├── cases/                      # Interactive case-based learning (page bundles)
+│   │   ├── _index.md               # Section landing page front matter
+│   │   └── YYYY-MM-DD-<slug>/      # One folder per case
+│   │       └── index.md            # Markdown body with {{< case-mcq >}} shortcodes
+│   └── videos/                     # Video episodes with a written summary to read (page bundles)
 │       ├── _index.md               # Section landing page front matter
-│       └── YYYY-MM-DD-<slug>/      # One folder per case
-│           └── index.md            # Markdown body with {{< case-mcq >}} shortcodes
+│       └── YYYY-MM-DD-<slug>/      # One folder per episode
+│           ├── index.md            # {{< video >}} + TL;DR + written summary
+│           └── thumbnail.jpg|png   # The user's own YouTube thumbnail — facade image AND og:image (cover.image must name the real extension)
 ├── layouts/
 │   ├── cases/
 │   │   └── single.html             # Custom layout for interactive cases — wraps each H2 in a gated <section>, hides all but the first, reveals next on MCQ Continue. Inlines the gating + MCQ JS.
-│   ├── list.html                   # Override of PaperMod's list.html — single change: injects an "Interactive case" eyebrow badge for entries from the `cases` section. Used by homepage (mixed feed) and /cases/.
+│   ├── list.html                   # Override of PaperMod's list.html — single change: injects an eyebrow badge ("Interactive case" / "Video") for entries from the `cases` / `videos` sections. Used by homepage (mixed feed) and the section lists.
 │   ├── partials/
 │   │   ├── extend_head.html        # Meta-description length guard + GoatCounter (prod only) + ALL site-wide CSS (share row, case UI, home hero/cards, mobile WhatsApp bar)
 │   │   ├── extend_footer.html      # Site-wide disclaimer line + includes whatsapp-bar.html
 │   │   ├── home_info.html          # Override — homepage hero (eyebrow, title, tagline) + 4 colour-coded section cards (Reviews/Guidelines/Cases/Research). Tagline text still comes from [params.homeInfoParams] in hugo.toml.
-│   │   ├── whatsapp-bar.html       # Mobile-only sticky WhatsApp bar (posts/cases only). See "Theme & layout gotchas" — the page gate is in JS, not Hugo, and that is deliberate.
-│   │   ├── whatsapp-qr.html        # Desktop-only WhatsApp QR block (posts only). Rendered in the footer, MOVED into the article after the TL;DR by JS. Same JS page-gate rationale as the bar.
+│   │   ├── video-schema.html       # schema.org VideoObject JSON-LD for videos/ pages, called from extend_head.html. Safe to condition per page there: head.html is NOT partialCached (the footer is).
+│   │   ├── whatsapp-bar.html       # Mobile-only sticky WhatsApp bar (posts/cases/videos only). See "Theme & layout gotchas" — the page gate is in JS, not Hugo, and that is deliberate.
+│   │   ├── whatsapp-qr.html        # Desktop-only WhatsApp QR block (posts and videos only). Rendered in the footer, MOVED into the article after the TL;DR by JS. Same JS page-gate rationale as the bar.
 │   │   └── share_icons.html        # Override of PaperMod's share row — WhatsApp channel CTA + single native-share button (Web Share API → clipboard fallback). Used by posts AND cases.
 │   └── shortcodes/
+│       ├── video.html              # {{< video >}} — click-to-load YouTube facade driven by the page's `video:` front matter. Local thumbnail; the youtube-nocookie.com iframe is created only on click.
 │       ├── source.html             # {{< source >}} — citation block from front matter
 │       └── case-mcq.html           # {{< case-mcq >}} — interactive MCQ widget; parses YAML inner content (question + 3-4 options, each with optional `correct: true` + per-option rationale). On click, reveals ONLY the selected option's rationale; marks correct option with green border if user picked wrong.
 ├── static/
@@ -78,7 +86,7 @@ Hard-won during the Aug 2026 work. Each of these looks like it works and then do
 - **`.Type` on a single page is `page`, not the section.** Use `.Section` if you need "posts"/"cases" (but see the caching trap above).
 - **Hugo's `len` on a string counts bytes, not characters.** Em-dashes are 3 bytes, so a 155-character description reports as ~158+. Use `strings.RuneCount` — the meta-description guard in `extend_head.html` does.
 - **`requestAnimationFrame` is throttled to zero in hidden/background tabs.** Don't gate anything user-visible on it — a forced reflow (`void el.offsetHeight`) achieves the same transition kick reliably.
-- **The dev server goes stale.** If CSS or a partial appears to vanish, kill and restart `hugo server` before debugging the code — this cost time twice. Always confirm against a real `hugo --gc --minify` build, which is the source of truth.
+- **The dev server goes stale.** If CSS or a partial appears to vanish, kill and restart `hugo server` before debugging the code — this cost time twice (three times: the VideoObject JSON-LD partial silently did not render until the server was restarted). **`driver.mjs stop` only stops a server the driver started itself** — it prints "no pidfile; nothing to stop" for any other `hugo server`, and `driver.mjs serve` then happily reuses it ("already up"). When that happens, `pkill -f "hugo server"` first, then `driver.mjs serve`. Always confirm against a real `hugo --gc --minify` build, which is the source of truth.
 - **Case gating does not exist in Hugo's output — it is built by runtime JS.** `layouts/cases/single.html` emits bare `<h2>`s and its inline script wraps them into `<section class="case-section">` in the browser, locking all but the first with **`data-locked="true"`** (not the `hidden` attribute — probing `hasAttribute('hidden')` gives a confidently wrong answer). `curl` on a case page finds 6 mentions of `case-section` (the inline CSS/JS), not 13 sections. Any check of gating must use a real browser; `driver.mjs case` does it with `chrome --headless --dump-dom`.
 - **`grep -c` lies about Hugo's minified HTML.** Minified output is one long line and `grep -c` counts *lines*, so a page with 7 tables reports `1`. Count occurrences in Python instead. The same trap bit the reading-time check: `grep -oE '[0-9]+ min' | head -1` matched a stray `2` on a 17-minute post.
 - **Minification also strips the quotes around attribute *values*.** `<meta name="description">` is emitted as `<meta name=description content="…">` in `public/`, so grepping the built site for `name="description"` returns **zero matches on a page that has one**. This produced a confident false "the theme doesn't emit a meta description at all" before the raw byte was actually inspected. Match `name=description` (unquoted) against built output, or check the source template instead.
@@ -208,6 +216,37 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
     git push
     ```
 
+## Per-video workflow
+
+Video episodes (the user's YouTube immunology series, launched Oct 2026) live under `content/videos/`. **Each video gets its own page with a written summary — not a bare embed in a list.** A video is invisible to Google (it cannot read it), so a list of embeds is one thin page, while one page per video is one indexable, shareable URL per episode with real text. This is the same constraint as open follow-up 4: reach, not click-through, is the problem. The section landing page `/videos/` is the "list" view.
+
+1. **Get the transcript or script first.** Claude cannot watch a video. The YouTube *description* is not enough — it lists topics, not what was said. If the user has not supplied the narration, ask for it. Everything on the page must be traceable to it, as with a paper.
+
+2. **Scaffold:**
+   ```sh
+   hugo new content videos/YYYY-MM-DD-<topic-slug>/index.md
+   ```
+   The folder date is the date the **page** is published; the real upload time goes in `video.uploaded` (it feeds the VideoObject `uploadDate`). Same date gotcha as posts: keep `date:` in the past or the page 404s.
+
+3. **Front matter** — `title` (≤50 chars, drop the "1." episode prefix YouTube uses), `summary`, `description` (≤155), `tags` (**no `categories:`** — research/reviews/guidelines is posts-only), and the `video:` block: `id` (the 11-character ID from `youtu.be/<id>`), `series`, `episode`, `seconds` (runtime, e.g. 4:42 = 282), `uploaded` (ISO 8601 with offset). `WebFetch` returns only the title of a YouTube page; `curl -sL -A "Mozilla/5.0" https://www.youtube.com/watch?v=<id>` returns the full HTML, from which `og:title`, `datePublished`, `"lengthSeconds"`, `"ownerChannelName"` and `"shortDescription"` (the description, with line breaks) can be extracted.
+
+4. **Thumbnail:** the user drops their own YouTube thumbnail into the folder as `thumbnail.jpg` or `thumbnail.png` (like `infographic.png`; set `cover.image` to the real filename — the player and schema match `thumbnail.*`, but `og:image` uses `cover.image`). Episode 1 shipped as a 2560×1440, 1.8 MB PNG; a ~1280×720 compressed copy would load faster as the player background. It is the facade image and the `og:image`. **It is committed, not hotlinked from `i.ytimg.com`** — hotlinking would tell Google about every page view before anyone clicks play (same principle as the QR code). Without it `og:image` is missing and the VideoObject has no `thumbnailUrl`, which Google needs for video results; `driver.mjs` fails the page.
+
+5. **Body:** `{{< video >}}` first, then the TL;DR, then a written summary **from the transcript, in the same order**, with `## ` headings (the chapter list in the YouTube description is a good heading skeleton). The standing rules for posts apply: no length target, own words, nothing beyond the source. Specific to videos:
+   - **Do not paste the transcript as the page.** It is thin and repetitive. A structured write-up is the point.
+   - **Strip the spoken sign-on and sign-off.** The narration introduces the speaker by name; **the site carries no visible byline**, so do not carry that onto the page. Also drop subscribe/WhatsApp plugs and production notes.
+   - End with a one-line `*Based on …*` note if the episode names a source (Episode 1: Janeway's Immunobiology). Do not invent edition/year/DOI details that the script does not give.
+   - `{{< source >}}` is for papers; do not use it here.
+
+6. **Preview** at `http://localhost:1313/videos/<slug>/`. Check the thumbnail shows, the play button loads the video, and the QR block (desktop) / WhatsApp bar (mobile) appear.
+
+7. **Pre-push:** `driver.mjs all` — it enforces `draft: false`, the thumbnail on disk, `cover.relative: true`, a valid 11-character `video.id`, the `{{< video >}}` shortcode, no `categories:`, and a resolving `og:image`. Then commit and push as for posts (`git add content/videos/<folder>`, `git commit -m "Video: <title>"`).
+
+**Constraints worth knowing:**
+- **Do not use `weight:` to order episodes.** Hugo sorts weighted pages *before* unweighted ones, and the homepage feed pulls from `site.RegularPages`, so every weighted episode jumps above all newer posts regardless of date. **Tested, not assumed:** an episode back-dated to August dropped down the feed; adding `weight: 1` put it back at the top. Section lists are date-descending (newest episode first); if series ordering is ever wanted, sort by `video.episode` in a dedicated `layouts/videos/list.html`, not with `weight`.
+- **The embed is a facade on purpose.** A plain `<iframe>` loads YouTube's player and sets cookies on every page view; this loads nothing until clicked, then uses `youtube-nocookie.com`.
+- **Videos get the WhatsApp bar (mobile) and QR block (desktop)** — unlike cases they have a TL;DR to anchor the QR after.
+
 ## Conventions
 
 - **Folder naming:** `YYYY-MM-DD-<slug>/` for posts. Date prefix is for chronological sorting in Finder; the archetype strips it from the URL slug automatically.
@@ -229,14 +268,14 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 - **Copyright posture (reviewed Aug 2026).** The model is: **own-words summaries of facts** (findings, numbers and recommendations are facts and aren't copyrightable) + **our own infographics** + citation with DOI + **non-commercial**. Three rules follow. (1) **Never reproduce figures, tables, images or radiology from the source** — and don't build an infographic by tracing one. (2) **Never copy sentences**; citing a source is not permission to quote it. Several sources are CC BY-NC-ND, and paywalled ones (NEJM, Nature Rev Rheumatol) are all-rights-reserved. (3) **The non-commercial status is load-bearing** — NC licences and fair-use arguments both weaken the moment the site earns revenue, so **revisit licensing before adding ads, sponsorship or paid tiers**. `content/about.md` carries the public statement and a takedown contact.
 - **No visible byline anywhere.** `hideAuthor = true` is set site-wide (the user asked for their name off the homepage; a per-post byline was the main "blogger" tell). Authorship is preserved in `content/about.md`, the `<meta name="author">` tag and the `Person` node in PaperMod's `schema_json.html`. **Don't reintroduce a byline without asking** — an E-E-A-T byline scoped to post pages only is an open follow-up, not a settled decision.
 - **Homepage is a custom hero, not the stock PaperMod blurb.** `layouts/partials/home_info.html` renders an eyebrow, large title, tagline and four colour-coded cards (Reviews blue / Guidelines green / Cases violet / Research amber), then a "Latest" label above the normal feed. Tagline wording still lives in `[params.homeInfoParams]` in `hugo.toml`.
-- **Mobile WhatsApp bar** (`whatsapp-bar.html`): always visible on posts/cases at ≤767px, ~57px tall, appears 800ms after load, dismissible. Memory is an **expiry timestamp** in `localStorage` (`rd-wa-bar-until`), not a boolean — **30 days** after a dismiss, **180 days** after a Follow tap. It is deliberately a bar and not a modal: Google penalises intrusive mobile interstitials, but exempts small dismissible banners. **That exemption lapses if it grows much taller or loses the dismiss button.**
+- **Mobile WhatsApp bar** (`whatsapp-bar.html`): always visible on posts/cases/videos at ≤767px, ~57px tall, appears 800ms after load, dismissible. Memory is an **expiry timestamp** in `localStorage` (`rd-wa-bar-until`), not a boolean — **30 days** after a dismiss, **180 days** after a Follow tap. It is deliberately a bar and not a modal: Google penalises intrusive mobile interstitials, but exempts small dismissible banners. **That exemption lapses if it grows much taller or loses the dismiss button.**
 - **Desktop WhatsApp QR block** (`whatsapp-qr.html`), added Sep 2026 — the desktop half of the same job. Shown only at **≥768px**, so it and the mobile bar are mutually exclusive by CSS and can never both appear. Rationale: ~89% of traffic is desktop, where a bare `whatsapp.com/channel/…` link is functionally dead (it needs an existing WhatsApp Web session or a phone handoff nobody performs mid-article); a QR is the only handoff that works off a desktop screen. Four things about it are deliberate:
   - **It is rendered in the footer and *moved* into the article by JS**, anchored after the first `blockquote` (the TL;DR), falling back to the first `<p>` for posts that have none. This is what lets it appear inside 50+ published posts **without editing a single one** — the archive rule stays intact.
-  - **Posts only, gated on `location.pathname`.** Cases are excluded on purpose: they have no TL;DR to anchor to, and their sections are JS-gated, so injecting a node mid-page risks fighting the reveal logic. The gate is in JS rather than Hugo for the `partialCached` reason documented under "Theme & layout gotchas".
+  - **Posts and videos only, gated on `location.pathname`** (videos were added Oct 2026 — they have a TL;DR to anchor to). Cases are excluded on purpose: they have no TL;DR to anchor to, and their sections are JS-gated, so injecting a node mid-page risks fighting the reveal logic. The gate is in JS rather than Hugo for the `partialCached` reason documented under "Theme & layout gotchas".
   - **The QR keeps a forced white background in both themes.** A QR inverted by dark mode does not scan. Don't "fix" this to use `--entry` for consistency.
   - **The SVG is inlined with `readFile`, not linked as `<img src>`.** See the `absURL` gotcha above — an `<img>` src resolved through `absURL` renders broken in every local preview of built output. Inlining also removes the request and the broken-image state. The white frame is an explicit `128px` square with `box-sizing: border-box`, so it cannot stretch into a rectangle if the code inside ever fails to render.
   - Styled as a quiet resource note, not a subscribe banner — it sits inside the article body, so it has to read as page furniture.
-- **Homepage feed = `mainSections`.** `[params] mainSections = ['posts', 'cases']` in `hugo.toml` controls what the homepage list (and home RSS) pulls in. Add any new content section here when launching it (e.g. quizzes, modules). Section landing pages (`/posts/`, `/cases/`) stay filtered to their own section regardless.
+- **Homepage feed = `mainSections`.** `[params] mainSections = ['posts', 'cases', 'videos']` in `hugo.toml` controls what the homepage list (and home RSS) pulls in. Add any new content section here when launching it (e.g. quizzes, modules). Section landing pages (`/posts/`, `/cases/`) stay filtered to their own section regardless.
 
 ## Working with this user
 
@@ -258,6 +297,7 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
   qrencode emits one `<rect>` per module (~34 KB); the committed file is compacted to a single `<path>` of merged horizontal runs (~4 KB). **Verify what you commit actually decodes** — the URL is invisible once it is a bitmap, and a silently wrong QR looks exactly like a right one. There is no decoder installed; the check used at build time was a throwaway Python decoder (read format info → unmask → walk the zigzag → **de-interleave the EC blocks**, which version 4-M has two of → parse byte mode). Skipping the de-interleave step yields plausible-looking garbage after ~46 bytes, which is how the bug announces itself.
 - **Hugo extended** is installed via Homebrew (matches the version pinned in CI).
 - **`driver.mjs`** (`.claude/skills/run-rheumatology-digest/`) — zero-dependency Node harness, the way to build/serve/screenshot/validate the site. Subcommands: `all` (pre-push gate), `check <slug|--staged>`, `audit`, `build`, `serve`/`stop`, `smoke`, `case`, `shot`. Needs Node ≥18; `shot` and `case` need Google Chrome and degrade to a warning without it. Registered as a skill, so it auto-loads on "run/build/screenshot/verify the site".
+- **`driver.mjs` covers videos** (Oct 2026): `checkOne` has a `video` kind (no categories, valid `video.id`, `{{< video >}}` present, thumbnail on disk) and `smoke` fetches `/videos/` plus every live video page and its `og:image`. `driver.mjs build` does **not** clean `public/`, and the dev server writes there too — a draft page can sit in `public/` and look "published" when it is not; check with a clean build (`hugo --gc --minify -d <tmpdir>`). `public/` is gitignored.
 - **`audit` is deliberately never green** — 28 posts predate the `description` convention and 28 titles exceed 50 chars (open follow-ups 1 and 3). Use it to measure that backlog; use `all` / `check --staged` as the actual gate.
 
 ## Open follow-ups
@@ -281,3 +321,4 @@ Things flagged but not yet done — pick these up when relevant:
 11. **`www` TLS cert** — GitHub Pages' Let's Encrypt cert currently only covers the apex; `https://www.rheumatologydigest.org/` throws a cert warning. HTTP-www redirects fine to apex. Fix when convenient by removing/re-adding the custom domain in repo Settings → Pages, which forces a cert reissue covering both forms.
 12. ~~**`content/posts/welcome.md` — legacy defects.**~~ **Fixed Aug 2026** — an explicit `slug: "welcome-to-rheumatology-digest"` now pins the URL Hugo had been deriving from the title, and `categories: ["meta"]` was removed, which retired the orphan `/categories/meta/` page (it had exactly one member). Because a site announcement is not a clinical digest entry, no research/reviews/guidelines category fits it and it has no infographic — so `driver.mjs` exempts it by name via `ANNOUNCEMENT_POSTS`, deliberately narrow so it cannot become a loophole for a real post that forgot both. The body was also trimmed: the *Quizzes* and *Modules* bullets promised sections that do not exist and were removed, the *Cases* bullet was rewritten to describe the interactive format that actually shipped, and the stale "site is still being set up" note was dropped.
 13. **Hugo v0.158 deprecation warnings** — every build prints three. One is ours: `languageCode = 'en-us'` in `hugo.toml` should become `locale = 'en-us'`. The other two (`.Language.LanguageDirection`, `.Language.LanguageCode`) come from **PaperMod's own templates** — a submodule, so the fix is a theme update, not an edit. Don't rename our key in isolation without checking the RSS `<language>` tag still renders, since the theme still calls the deprecated accessors. Harmless until Hugo actually removes them.
+14. **Videos — loose ends (Oct 2026).** The section shipped with Episode 1 only. Open: (a) a **Videos card on the homepage hero** (`home_info.html` has four colour-coded cards and a fifth would need the grid reworked — not done); (b) **series ordering** on `/videos/` is date-descending — a dedicated `layouts/videos/list.html` sorting by `video.episode` is the fix if wanted (never `weight`, see the per-video workflow); (c) a **full-transcript `<details>` block** was considered and left out (it would carry the spoken "I'm Dr …" sign-on onto the page, against the no-byline convention, and duplicates the write-up) — revisit only if transcripts are cleaned of the sign-on; (d) **Episode 1's YouTube chapter timestamps were all `00:00`**, so YouTube ignored them — the user's to fix on YouTube (must start at `00:00`, ascend, ≥3 chapters, each ≥10 s).

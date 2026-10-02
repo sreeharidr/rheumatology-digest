@@ -43,8 +43,8 @@
 
 <script>
 (function () {
-  // Posts and cases only. Gated here rather than in Hugo — see note above.
-  if (!/^\/(posts|cases)\/.+/.test(location.pathname)) return;
+  // Posts, cases and videos only. Gated here rather than in Hugo — see note above.
+  if (!/^\/(posts|cases|videos)\/.+/.test(location.pathname)) return;
 
   var bar = document.getElementById('rd-wa-bar');
   if (!bar || !window.matchMedia('(max-width: 767px)').matches) return;

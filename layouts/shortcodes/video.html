@@ -1,0 +1,51 @@
+{{- /* {{< video >}} — YouTube click-to-load player, driven by the page's front matter:
+       video.id, video.series, video.episode, video.seconds. Place at the top of a
+       videos/ page body.
+
+       Why a facade rather than a plain <iframe>: an iframe loads YouTube's player
+       (and sets cookies) on every page view whether or not anyone presses play. This
+       renders a local thumbnail instead and only creates the iframe on click, using
+       the privacy-enhanced youtube-nocookie.com domain.
+
+       The thumbnail is a file in the page bundle (thumbnail.jpg), NOT hotlinked from
+       i.ytimg.com — hotlinking would tell Google about every page view before anyone
+       clicks, the same reason the WhatsApp QR is a committed file and not an API call.
+       With JS off, the thumbnail is still a plain link to the video on YouTube. */ -}}
+{{- $page := .Page -}}
+{{- $v := $page.Params.video -}}
+{{- $thumb := $page.Resources.GetMatch "thumbnail.*" -}}
+<div class="rd-video">
+  {{- with $v.series }}
+  <p class="rd-video__series">{{ . }}{{ with $v.episode }} · Episode {{ . }}{{ end }}</p>
+  {{- end }}
+  <div class="rd-video__frame" id="rd-video-frame">
+    <a class="rd-video__play" href="https://www.youtube.com/watch?v={{ $v.id }}"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Play video: {{ $page.Title }}"
+       {{- with $thumb }} style="background-image:url('{{ .RelPermalink }}')"{{ end }}>
+      <span class="rd-video__btn" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      {{- with $v.seconds }}{{ if gt (int .) 0 }}
+      <span class="rd-video__time">{{ printf "%d:%02d" (div (int .) 60) (mod (int .) 60) }}</span>
+      {{- end }}{{ end }}
+    </a>
+  </div>
+  <p class="rd-video__links"><a href="https://www.youtube.com/watch?v={{ $v.id }}" target="_blank" rel="noopener noreferrer">Watch on YouTube</a></p>
+</div>
+<script>
+(function () {
+  var frame = document.getElementById('rd-video-frame');
+  if (!frame) return;
+  frame.querySelector('.rd-video__play').addEventListener('click', function (e) {
+    e.preventDefault();
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + {{ $v.id }} + '?autoplay=1&rel=0';
+    f.title = {{ $page.Title }};
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.allowFullscreen = true;
+    frame.replaceChildren(f);
+  });
+})();
+</script>

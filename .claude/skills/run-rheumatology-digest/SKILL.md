@@ -1,6 +1,6 @@
 ---
 name: run-rheumatology-digest
-description: Build, serve, screenshot, validate and pre-push-check the Rheumatology Digest Hugo site. Use when asked to run, start, build, preview, test, screenshot, smoke-test or verify the site, or to check whether a post or case is ready to publish/push.
+description: Build, serve, screenshot, validate and pre-push-check the Rheumatology Digest Hugo site. Use when asked to run, start, build, preview, test, screenshot, smoke-test or verify the site, or to check whether a post, case or video page is ready to publish/push.
 ---
 
 # Run Rheumatology Digest
@@ -73,7 +73,7 @@ node .claude/skills/run-rheumatology-digest/driver.mjs audit
 | `audit` | Checklist over the whole archive. **Never exits 0** — see Gotchas. |
 | `build` | `hugo --gc --minify`; fails on errors *and* on meta-description length warnings. |
 | `serve` / `stop` | Dev server on :1313 (`-D --disableFastRender`), pidfile-tracked. Idempotent. |
-| `smoke` | Nav pages + every post + every case return 200, and each post's `og:image` actually fetches. |
+| `smoke` | Nav pages + every post + every case + every video return 200, and each post's and video's `og:image` actually fetches. |
 | `case [slug]` | Headless-DOM assertion that MCQ gating locks all but section 1. |
 | `shot <path> [name]` | Headless screenshot to `$TMPDIR/rd-driver/shots/`. |
 

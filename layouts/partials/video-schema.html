@@ -1,0 +1,18 @@
+{{- /* schema.org VideoObject for pages under videos/ — lets Google treat the page as a
+       video page and show the video in results. Called from extend_head.html, which
+       (unlike footer.html) is not partialCached, so a per-page condition is safe here.
+       Fields come from front matter; thumbnail and duration are optional. */ -}}
+{{- if and .IsPage (eq .Section "videos") .Params.video .Params.video.id -}}
+{{- $v := .Params.video -}}
+{{- $data := dict
+      "@context" "https://schema.org"
+      "@type" "VideoObject"
+      "name" .Title
+      "description" (.Description | default (.Summary | plainify))
+      "uploadDate" ($v.uploaded | default (.Date.Format "2006-01-02T15:04:05Z07:00"))
+      "embedUrl" (printf "https://www.youtube.com/embed/%s" $v.id)
+      "url" .Permalink -}}
+{{- with .Resources.GetMatch "thumbnail.*" }}{{ $data = merge $data (dict "thumbnailUrl" .Permalink) }}{{ end -}}
+{{- with $v.seconds }}{{ if gt (int .) 0 }}{{ $data = merge $data (dict "duration" (printf "PT%dH%dM%dS" (div (int .) 3600) (mod (div (int .) 60) 60) (mod (int .) 60))) }}{{ end }}{{ end -}}
+<script type="application/ld+json">{{ $data | jsonify | safeJS }}</script>
+{{- end -}}
