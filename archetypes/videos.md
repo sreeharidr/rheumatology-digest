@@ -15,7 +15,7 @@ cover:
   image: "thumbnail.jpg"
   relative: true
   alt: ""
-  hidden: true
+  hiddenInSingle: true
 video:
   id: ""            # the 11-character YouTube ID (youtu.be/<id>)
   series: ""

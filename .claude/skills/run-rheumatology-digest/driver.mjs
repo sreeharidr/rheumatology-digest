@@ -136,6 +136,24 @@ function checkOne(file) {
     }
   }
 
+  if (kind === 'post' || kind === 'video') {
+    // 9a. `cover.hidden: true` does NOT hide the cover on a single page — PaperMod reads
+    //     cover.hiddenInSingle first and the site config sets that to false. The cover then
+    //     renders twice (once as the cover, once in the body). Use `hiddenInSingle: true`.
+    if (/^cover:\s*\n(?:[ \t]+.*\n)*?[ \t]+hidden:\s*true\s*$/m.test(p.fm + '\n'))
+      fail(rel, 'cover.hidden: true has no effect on single pages — use cover.hiddenInSingle: true, or the cover renders twice');
+    // 9b. every body image (plain markdown or inside {{< gallery >}}) that points at a file
+    //     in the bundle must exist — a typo'd filename renders as a silent broken image.
+    const imgRe = /!\[[^\]]*\]\(([^)\s]+)\)/g;
+    let im; const seen = new Set();
+    while ((im = imgRe.exec(p.body))) {
+      const ref = im[1];
+      if (/^(https?:)?\/\//.test(ref) || ref.startsWith('/') || ref.startsWith('data:') || seen.has(ref)) continue;
+      seen.add(ref);
+      if (!fs.existsSync(path.join(dir, decodeURIComponent(ref)))) fail(rel, `body image "${ref}" not found in the bundle — it will render as a broken image`);
+    }
+  }
+
   if (kind === 'video') {
     // videos: tags only, a real YouTube id, and the player shortcode
     if (cats.length) fail(rel, 'videos must NOT set categories (research/reviews is a posts-only split)');

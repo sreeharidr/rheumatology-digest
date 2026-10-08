@@ -1,0 +1,86 @@
+{{- /* {{< gallery layout="side|carousel" captions="true" >}} ... {{< /gallery >}}
+
+       Shows several images from the page bundle as either a responsive side-by-side
+       grid (default) or a swipeable carousel. Inner content is plain markdown image
+       lines, one per image, with the file names that sit in the post folder:
+
+         {{< gallery layout="carousel" >}}
+         ![Alt text for image one](infographic-2.png)
+         ![Alt text for image two](infographic-3.png)
+         {{< /gallery >}}
+
+       Why parsed here instead of letting Markdown render the images: every image gets
+       width/height from the resource (no layout jump while loading) and is wrapped in
+       a link to the full-size file, which is the "click to enlarge" — infographics are
+       too dense to read at half width. The carousel is CSS scroll-snap, so it swipes
+       and scrolls with no JavaScript; the buttons and counter are added by a small
+       script and are hidden until it runs.
+
+       NOT for the cover image: that one is `cover.image` in front matter and is the
+       only image used for og:image / link previews. */ -}}
+{{- $layout := .Get "layout" | default "side" -}}
+{{- $captions := eq (.Get "captions") "true" -}}
+{{- $imgs := findRESubmatch `!\[([^\]]*)\]\(([^)\s]+)\)` (printf "%s" .Inner) -}}
+{{- $n := len $imgs -}}
+{{- if $n -}}
+<div class="rd-gallery rd-gallery--{{ $layout }}" data-count="{{ $n }}"
+     {{- if eq $layout "carousel" }} role="group" aria-roledescription="carousel" aria-label="Image gallery, {{ $n }} images"{{ end }}>
+  {{- if eq $layout "carousel" }}<div class="rd-gallery__track" tabindex="0">{{ end }}
+  {{- range $i, $m := $imgs }}
+    {{- $alt := index $m 1 -}}
+    {{- $name := index $m 2 -}}
+    {{- $res := $.Page.Resources.GetMatch $name -}}
+    {{- $src := $name -}}{{- with $res }}{{ $src = .RelPermalink }}{{ end }}
+    <figure class="rd-gallery__item"{{ if eq $layout "carousel" }} aria-label="{{ add $i 1 }} of {{ $n }}"{{ end }}>
+      <a href="{{ $src }}" target="_blank" rel="noopener">
+        <img src="{{ $src }}" alt="{{ $alt }}" loading="lazy"
+             {{- with $res }}{{ if .Width }} width="{{ .Width }}" height="{{ .Height }}"{{ end }}{{ end }}>
+      </a>
+      {{- if and $captions $alt }}<figcaption>{{ $alt }}</figcaption>{{ end }}
+    </figure>
+  {{- end }}
+  {{- if eq $layout "carousel" }}</div>
+  <button class="rd-gallery__nav rd-gallery__nav--prev" type="button" aria-label="Previous image" hidden>&#8249;</button>
+  <button class="rd-gallery__nav rd-gallery__nav--next" type="button" aria-label="Next image" hidden>&#8250;</button>
+  <p class="rd-gallery__count" aria-live="polite" hidden>1 / {{ $n }}</p>
+  {{ end }}
+</div>
+{{- if eq $layout "carousel" }}
+{{- /* Emitted after EVERY carousel and guarded in JS, rather than once via Page.Scratch:
+       a script placed after the first carousel cannot see later ones, and Scratch keeps
+       its value across dev-server rebuilds so the script silently disappeared. It waits
+       for DOMContentLoaded so one run initialises every carousel on the page. */ -}}
+<script>
+(function () {
+  if (window.__rdGallery) return;
+  window.__rdGallery = true;
+  function init() {
+  document.querySelectorAll('.rd-gallery--carousel').forEach(function (g) {
+    var track = g.querySelector('.rd-gallery__track');
+    var prev = g.querySelector('.rd-gallery__nav--prev');
+    var next = g.querySelector('.rd-gallery__nav--next');
+    var count = g.querySelector('.rd-gallery__count');
+    var n = g.querySelectorAll('.rd-gallery__item').length;
+    if (!track || n < 2) return;
+    function idx() { return Math.round(track.scrollLeft / track.clientWidth); }
+    function update() {
+      var i = idx();
+      count.textContent = (i + 1) + ' / ' + n;
+      prev.disabled = i <= 0;
+      next.disabled = i >= n - 1;
+    }
+    function go(d) { track.scrollTo({ left: (idx() + d) * track.clientWidth }); }
+    prev.addEventListener('click', function () { go(-1); });
+    next.addEventListener('click', function () { go(1); });
+    // Direct call, not requestAnimationFrame: rAF is throttled to zero in hidden tabs (see CLAUDE.md gotchas).
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    [prev, next, count].forEach(function (el) { el.hidden = false; });
+    update();
+  });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+{{- end }}
+{{- end -}}

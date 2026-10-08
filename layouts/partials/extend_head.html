@@ -297,6 +297,61 @@
 .case-mcq-rationale-body { font-size: 0.95rem; line-height: 1.6; }
 .case-mcq-rationale-body p:last-child { margin-bottom: 0; }
 
+/* === Image gallery (layouts/shortcodes/gallery.html) ============== */
+/* Side-by-side grid or CSS scroll-snap carousel for extra images in a post.
+   Carousel needs no JS to swipe; the buttons/counter are revealed by the script. */
+.rd-gallery { margin: 1.5rem 0; position: relative; }
+.rd-gallery figure { margin: 0; }
+.rd-gallery img { display: block; max-width: 100%; height: auto; border-radius: 8px; }
+.rd-gallery a { box-shadow: none; text-decoration: none; }
+.rd-gallery figcaption { margin-top: 0.4rem; font-size: 0.8rem; color: var(--secondary); text-align: center; }
+
+.rd-gallery--side {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.rd-gallery__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-radius: 8px;
+  outline-offset: 2px;
+}
+.rd-gallery__track::-webkit-scrollbar { display: none; }
+@media (prefers-reduced-motion: no-preference) { .rd-gallery__track { scroll-behavior: smooth; } }
+.rd-gallery--carousel .rd-gallery__item {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.rd-gallery--carousel img { max-height: 85vh; width: auto; margin: 0 auto; object-fit: contain; }
+.rd-gallery__nav {
+  position: absolute;
+  top: calc(50% - 2rem);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--entry);
+  color: var(--primary);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+.rd-gallery__nav--prev { left: 8px; }
+.rd-gallery__nav--next { right: 8px; }
+.rd-gallery__nav:disabled { opacity: 0.35; cursor: default; }
+.rd-gallery__nav:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.rd-gallery__count { margin: 0.5rem 0 0; text-align: center; font-size: 0.8rem; color: var(--secondary); }
+
 /* === Video pages ================================================= */
 /* Click-to-load YouTube facade (layouts/shortcodes/video.html). The frame keeps a
    dark ground so the page looks right even if thumbnail.jpg is missing. */

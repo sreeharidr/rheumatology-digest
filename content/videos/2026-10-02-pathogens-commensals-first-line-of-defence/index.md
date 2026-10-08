@@ -11,7 +11,7 @@ cover:
   image: "thumbnail.png"
   relative: true
   alt: "The first line — Episode 01, Innate Immunity. Rheumatology Digest immunology series."
-  hidden: true
+  hiddenInSingle: true
 video:
   id: "kDhjMPPki3w"
   series: "Immunology Series"
