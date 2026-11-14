@@ -151,6 +151,13 @@ User's offline workflow: select published paper → make a portrait HTML infogra
    ```
    GitHub Actions deploys in ~30 seconds. **Push and stop — do not wait for the deploy** (see "Working with this user").
 
+8. **WhatsApp channel teaser** (standing instruction, 12 Nov 2026; changed from text to a square image the same day, then widened from posts to **every post, case and video** — drafted with the content; the per-case and per-video workflows below point back here). A small **square image** for the WhatsApp channel whose only job is to send readers to the full page. **Content: one headline (ideally the question or finding the post answers, with the key phrase in red italics) and one summary point (one sentence, at most two, key numbers in bold), nothing more.** No emoji, no first-person voice, no byline, nothing the post itself does not say. Keep the honest caveat when the result is negative or post hoc (AFFINITY's says "a post hoc finding"). It is a teaser, not a second summary: do not add more points.
+   - **Canvas and look:** 1080×1080, same navy/red/Inter/Source Serif 4 look as the infographics: top colour bar, small kicker ("New post" + the disease area) top-left, logo mark and wordmark top-right, 80 px serif headline, the summary point in a tinted box with a red left rule, and a deep-navy footer strip reading "Read the *full post*" (cases: "Work through the *full case*"; videos: "Watch the *full video*") and `rheumatologydigest.org`. **No QR code** — the site QR is the channel-join code and readers of a channel post are already in the channel.
+   - **Build:** `teaser.html` in the paper's `_source/` folder (reuse `mark.svg`; copy `AFFINITY`'s `teaser.html` as the template), rendered at scale 1: `chrome --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1080,1080 --virtual-time-budget=9000 --screenshot=teaser.png file://.../teaser.html`. Read the PNG before delivering: headline and point must not clip, and the content should fill the square without a dead gap above the footer. No pngquant step (it is not shipped on the site).
+   - **Outputs:** `teaser.png` and `teaser.txt` in the paper's archive folder (next to `infographic-wa.png`, never in the repo). **`teaser.txt` is the WhatsApp caption and holds only the link line** `Full post: https://rheumatologydigest.org/posts/<slug>/` (cases: `Full case: …/cases/<slug>/`; videos: `Full video: …/videos/<slug>/`), because an image's own text is not clickable. Show the image in chat so the user can see it.
+   - **Per content type.** The kicker says **"New post"**, **"New case"** or **"New video"** plus the topic. **Posts:** headline and point come from the TL;DR, as above. **Cases: never leak the diagnosis.** The headline is the clinical puzzle (for example the patient and presenting problem, ending in a question) and the one point is the hook that makes a reader want to work the case; the diagnosis stays hidden exactly as the case itself hides it until about three-quarters through. **Videos:** the headline is the question the episode answers, and the point is its single main takeaway, taken from the written summary. The archive folder is the paper's folder under `~/Documents/Rheumatology Digest/` for posts, the folder that holds the case PDF for cases (`~/Documents/NEJM Case Records/`, or — since Nov 2026 — the monthly folder, e.g. `26.11 November/10. NEJM Case/`, where the user now drops the PDF), and next to the thumbnail or script for videos (ask if unsure). The caption link is `.../posts/<slug>/`, `.../cases/<slug>/` or `.../videos/<slug>/`.
+   - The page is not live until the deploy finishes (~30 s after the push), so tell the user to post the teaser after the push.
+
 ## Infographic workflow
 
 Added Oct 2026. **Standing instruction (24 Oct 2026): for every post Claude builds the infographic itself, in both versions, without asking** — `infographic.png` (1024 px, compressed) into the post bundle and `infographic-wa.png` (2048 px) into the paper's archive folder, as part of drafting the post. First use: the ARF/PSRA post (2026-10-22). If the user drops in their own `infographic.png`, theirs wins and must not be overwritten.
@@ -188,6 +195,7 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 - **Selected-option feedback only.** When a reader picks an option, only THAT option's rationale appears. If they picked wrong, the correct option still gets a subtle green border on its answer button so they learn what was right.
 - **No scoring.** Purely educational; no tally, no test framing.
 - **Categories not used.** Cases use `tags` only (no `categories` field — research/reviews are a posts-only split).
+- **Keep the diagnosis out of everything visible before the reveal** — title, `summary`, `description` and **tags** (the disease tag is what normally goes on a post; on a case it would give the answer away, so use the presenting problem instead, e.g. `lymphadenopathy`, `leukopenia`). The same applies to the teaser image. Check with a quick search that the diagnosis first appears at the intended section.
 
 **Per case:**
 
@@ -199,7 +207,7 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
 
 2. **Edit front matter** — `title` (real clinical title, e.g. "A 7-Year-Old Girl with a Limp and Leg Pain"), `summary` (SEO; Claude drafts), `description` (short page subtitle, optional), `tags`, `source` block (authors / journal / year / DOI). Leave `slug` alone — the archetype derives it from the folder name minus the date prefix. **Do NOT** set `categories:`, and **do not** add a `cover:` block — cases have no infographic.
 
-3. **Source PDF** lives in `~/Documents/NEJM Case Records/` (separate from the repo, like the posts archive). User provides the PDF; Claude reads it with the Read tool (poppler installed).
+3. **Source PDF** lives in `~/Documents/NEJM Case Records/` or, since Nov 2026, in a numbered folder inside the month's archive folder (e.g. `~/Documents/Rheumatology Digest/26.11 November/10. NEJM Case/`) — separate from the repo, like the posts archive. User provides the PDF; Claude reads it with the Read tool (poppler installed).
 
 4. **Write the body** as a sequence of `## ` sections, each ending with a `{{< case-mcq >}}` shortcode (except the final summary section, which has no MCQ — it auto-reveals when the last MCQ's Continue is clicked). End with `{{< source >}}`.
 
@@ -241,7 +249,9 @@ Interactive case-based learning lives under `content/cases/`. Each case is a sin
    ```
    For cases it additionally enforces: `draft: false`; at least one `## ` section and one `{{< case-mcq >}}` shortcode; **no `categories:`**; and — via headless Chrome — that the runtime gating still locks every section but the first. That last check cannot be done against Hugo's output; see the gotcha below.
 
-10. **Commit + push:**
+10. **Teaser:** build the WhatsApp teaser image for the case (see per-post step 8; the headline must not give away the diagnosis).
+
+11. **Commit + push:**
     ```sh
     git add content/cases/YYYY-MM-DD-<topic-slug>
     git commit -m "Case: <topic>"
@@ -273,6 +283,8 @@ Video episodes (the user's YouTube immunology series, launched Oct 2026) live un
 6. **Preview** at `http://localhost:1313/videos/<slug>/`. Check the thumbnail shows, the play button loads the video, and the QR block (desktop) / WhatsApp bar (mobile) appear.
 
 7. **Pre-push:** `driver.mjs all` — it enforces `draft: false`, the thumbnail on disk, `cover.relative: true`, a valid 11-character `video.id`, the `{{< video >}}` shortcode, no `categories:`, and a resolving `og:image`. Then commit and push as for posts (`git add content/videos/<folder>`, `git commit -m "Video: <title>"`).
+
+8. **Teaser:** build the WhatsApp teaser image for the episode (see per-post step 8) and post it after the push.
 
 **Constraints worth knowing:**
 - **Do not use `weight:` to order episodes.** Hugo sorts weighted pages *before* unweighted ones, and the homepage feed pulls from `site.RegularPages`, so every weighted episode jumps above all newer posts regardless of date. **Tested, not assumed:** an episode back-dated to August dropped down the feed; adding `weight: 1` put it back at the top. Section lists are date-descending (newest episode first); if series ordering is ever wanted, sort by `video.episode` in a dedicated `layouts/videos/list.html`, not with `weight`.
@@ -322,7 +334,7 @@ Video episodes (the user's YouTube immunology series, launched Oct 2026) live un
 
 - **Xcode licence block (Oct 2026, still open).** After an Xcode update, the system `python3`, `git` and `swiftc` (`/usr/bin/…` shims) fail with *"You have not agreed to the Xcode license agreements"*. It surfaced mid-session, first on `python3`, then on `git`. Workaround: call **`/opt/homebrew/bin/python3`** and **`/opt/homebrew/bin/git`** explicitly (Node, Hugo, `sips`, `pngquant`, `pdftotext` are unaffected). The real fix is the user running `sudo xcodebuild -license` once in Terminal — Claude cannot (needs a password). Commits pushed this way are identical.
 - **`pngquant`** (Homebrew) and **Google Chrome** are used by the infographic workflow; both are installed.
-- **`gh` CLI** is installed and authenticated as `sreeharidr` with a credential helper for git over HTTPS. Future `git push` operations don't prompt for credentials.
+- **`gh` CLI** is installed with two accounts logged in, `sreeharidr` (owns this repo) and `smartmedico`. **Plain `git push` can fail with a 403 "denied to smartmedico" (Nov 2026):** git's credential helper is the macOS keychain (`osxkeychain`, set in `/opt/homebrew/etc/gitconfig`), which holds `smartmedico`'s token and ignores which account `gh` has active, so `gh auth switch --user sreeharidr` does not fix it. Push with `gh`'s token for that one command instead, which changes no config: `git -c credential.helper= -c credential.helper='!gh auth git-credential' push` (with `sreeharidr` active in `gh`). The permanent fix — replacing the keychain entry or running `gh auth setup-git` — is the user's call.
 - **`poppler`** is installed (for `pdftotext` / PDF reading via Read tool — needed when reading source PDFs from the archive folder).
 - **`qrencode`** (Homebrew) generates `static/whatsapp-qr.svg` offline. To regenerate after a channel URL change:
   ```sh
